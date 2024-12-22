@@ -13,3 +13,12 @@ exports.createManager = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
+
+  exports.getManagers = async (req, res) => {
+    try {
+        const managers = await prisma.manager.findMany()
+        return res.status(200).json({data: managers})
+    } catch (error) {
+        return res.status(500).json({ error: error.message }) 
+    }
+}

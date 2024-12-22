@@ -22,6 +22,7 @@ import DatePickerComponent from "../test";
 import { formatDate } from "../../../../utils/helpers";
 import NumberField from "../../../atoms/NumberField/NumberField";
 import SelectField from "../../../atoms/SelectField/SelectField";
+import { Loader } from "../../../atoms/Loader/Loader";
 
 const SignUpForm = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -32,10 +33,17 @@ const SignUpForm = () => {
 
   const [managers, setManagers] = useState<IManager[]>([]);
 
+
   useEffect(() => {
     (async () => {
-      const response = await getManagers();
-      setManagers(response || []);
+      try {
+        const response = await getManagers();
+        setManagers(response.data);
+      } catch {
+        enqueueSnackbar("Error occured during fetching managers", {
+          variant: ESnackbarTypes.ERROR,
+        });
+      }
     })();
   }, []);
 
@@ -55,7 +63,7 @@ const SignUpForm = () => {
     // manager:{ id: "", first_name: "", last_name: "" },
     manager_id: "",
 
-    isRemoteWork: 'false',
+    isRemoteWork: "false",
     email: "",
     password: "",
     role: EUserRole.EMPLOYEE,
@@ -79,9 +87,9 @@ const SignUpForm = () => {
 
     try {
       if (!formValues.password) {
-        return
+        return;
       }
-      
+
       const hashedPassword = await generateBcryptHash(
         formValues.password as string,
         10
@@ -131,22 +139,14 @@ const SignUpForm = () => {
     errors,
     handleSubmit,
     handleInputBlur,
-    handleSelectInputBlur
+    handleSelectInputBlur,
   } = useForm(defaultValues, handleOnSubmit, SignUpValidate);
 
-  const [isChecked, setIsChecked] = useState(false)
-
-  // const handdleCheckInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>{
-  //   setIsChecked(!isChecked)
-  //   handleInputChange(e)
-  // }
-
-  console.log(formValues)
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
-        handleInputChange(event)
-
+    handleInputChange(event);
   };
 
   return (
@@ -226,7 +226,6 @@ const SignUpForm = () => {
               <DatePickerComponent
                 startDate={startDate}
                 setStartDate={setStartDate}
-        
               />
             </div>
             <SelectField

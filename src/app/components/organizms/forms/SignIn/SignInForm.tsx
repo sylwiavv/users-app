@@ -25,9 +25,7 @@ export const SignInForm = () => {
     email: "",
   };
 
-  const { checkSignInUser, generateSignInToken, createSignInUser } =
-    useSignInUser();
-  const { checkBcryptPasswordHash } = useBcrypt();
+  const { generateSignInToken, createSignInUser } = useSignInUser();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 

@@ -49,7 +49,7 @@ export const useSignInUser = () => {
 
   const createSignInUser = useCallback(async (data: { email: string; password: string }) => {
     try {
-      const response = await fetch('https://users-app-pied.vercel.app/', {
+      const response = await fetch(`${API_URL.SIGN_IN_USERS_TOKEN}`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

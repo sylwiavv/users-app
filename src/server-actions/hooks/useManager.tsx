@@ -6,14 +6,16 @@ import { API_URL } from "../enums/enums";
 export const useManager = () => {
   const getManagers = useCallback(async () => {
     try {
-      return fetch(`${API_URL.MANAGER}`, {
+      const response = fetch(`${API_URL.MANAGER}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
-      }).then((response) => response.json());
-    } catch (e) {
-      console.log(e);
+      });
+      const responseData = (await response).json();
+      return responseData;
+    } catch (error) {
+      return []
     }
   }, []);
 

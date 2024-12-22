@@ -59,23 +59,6 @@ export const useUser = () => {
     []
   );
 
-  const getUsers = useCallback(async (): Promise<IUser[] | []> => {
-    try {
-      const response = await fetch(`${API_URL.USER}`, {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-
-      const data: IUser[] = await response.json();
-      return data;
-    } catch (e) {
-      console.error(e);
-      return [];
-    }
-  }, []);
-
   const getUserInfo = useCallback(async (id: string): Promise<IUser | null> => {
     try {
       return fetch(`${API_URL.USER}/${id}`, {
@@ -87,6 +70,22 @@ export const useUser = () => {
     } catch (e) {
       console.log(e);
       return null;
+    }
+  }, []);
+  //---------------------
+  const getUsers = useCallback(async (): Promise<IUser[] | []> => {
+    try {
+      const response = await fetch(`${API_URL.USER}`, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+
+      const responseData = await response.json();
+      return responseData;
+    } catch (error) {
+      return [];
     }
   }, []);
 
