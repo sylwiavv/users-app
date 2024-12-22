@@ -1,5 +1,5 @@
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
-const PRODUCTION_API = "https://users-app-pied.vercel.app/";
+const PRODUCTION_API = "https://users-app-pied.vercel.app/api/";
 const DEVELOPMNENT_API = `http://localhost:9000/`;
 
 export const API_URL = {
