@@ -2,7 +2,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 
 export const allowCors = (fn: Function) => async (req: VercelRequest, res: VercelResponse) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', 'https://users-app-front-rhza0uyod-sylwiavvs-projects.vercel.app/');
+  res.setHeader('Access-Control-Allow-Origin', 'https://users-app-front-ten.vercel.app/');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS, PATCH, DELETE, POST, PUT');
   res.setHeader(
     'Access-Control-Allow-Headers',
