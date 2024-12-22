@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --hot",
-    "prod": "webpack serve --open --config webpack.dev.js",
+    "prod": "webpack --mode production",
     "build": "webpack"
   },
   "repository": {
