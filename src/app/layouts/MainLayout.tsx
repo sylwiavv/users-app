@@ -1,6 +1,6 @@
-import  { ReactNode } from "react";
+import { ReactNode } from "react";
 import { Header } from "./Header";
-import { Routes, Route, useLocation } from "react-router";
+import { Routes, Route, useLocation, Navigate } from "react-router";
 import {
   AddressBookPage,
   SettingsPage,
@@ -12,30 +12,44 @@ import {
 import PrivateRoutes from "../utils/ProtectedRoutes";
 import OnlyAdminRoute from "./OnlyAdminRoute/OnlyAdminRoute";
 
-
 interface IProps {
   children: ReactNode;
 }
 
 const MainLayout = () => {
-  const location = useLocation()
+  const location = useLocation();
   const isUserDetails = location.pathname.includes("user-details");
-  const currentUserFromSession = JSON.parse(sessionStorage.getItem("currentUser") || "null");
+  const currentUserFromSession = JSON.parse(
+    sessionStorage.getItem("currentUser") || "null"
+  );
 
   return (
     <>
       {currentUserFromSession?.isAuthenticated && <Header />}
 
       <main
-        className={`${currentUserFromSession?.isAuthenticated ? "is-authorized" : "is-not-authorized"} ${
-          isUserDetails ? "background-with-shadow" : ""
-        }`}
+        className={`${
+          currentUserFromSession?.isAuthenticated
+            ? "is-authorized"
+            : "is-not-authorized"
+        } ${isUserDetails ? "background-with-shadow" : ""}`}
       >
         <Routes>
           <Route element={<PrivateRoutes />}>
+            <Route path="/" element={<Navigate to="/address-book" replace />} />
             <Route path="address-book" element={<AddressBookPage />} />
-            <Route path="settings" element={<OnlyAdminRoute><SettingsPage /></OnlyAdminRoute>} />
-            <Route path="user-details/:id" element={<WrappedUserDetailsPage />} />
+            <Route
+              path="settings"
+              element={
+                <OnlyAdminRoute>
+                  <SettingsPage />
+                </OnlyAdminRoute>
+              }
+            />
+            <Route
+              path="user-details/:id"
+              element={<WrappedUserDetailsPage />}
+            />
           </Route>
           <Route path="signin" element={<SignInPage />} />
           <Route path="signup" element={<SignUpPage />} />
