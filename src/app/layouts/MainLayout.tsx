@@ -1,6 +1,6 @@
 import  { ReactNode } from "react";
 import { Header } from "./Header";
-import { Routes, Route, useLocation, Navigate } from "react-router";
+import { Routes, Route, useLocation } from "react-router";
 import {
   AddressBookPage,
   SettingsPage,
@@ -33,7 +33,7 @@ const MainLayout = () => {
       >
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route path="/" element={<Navigate to="/address-book" replace />} />
+            <Route path="address-book" element={<AddressBookPage />} />
             <Route path="settings" element={<OnlyAdminRoute><SettingsPage /></OnlyAdminRoute>} />
             <Route path="user-details/:id" element={<WrappedUserDetailsPage />} />
           </Route>

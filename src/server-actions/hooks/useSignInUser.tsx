@@ -44,7 +44,30 @@ export const useSignInUser = () => {
       }
   }, [])
 
+
+  // -------------------------
+
+  const createSignInUser = useCallback(async (data: { email: string; password: string }) => {
+    try {
+      const response = await fetch('https://users-app-pied.vercel.app/signin', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      });
+  
+      const responseData = await response.json();
+        return responseData;
+  
+    } catch (error) {
+      return error
+    }
+  }, []);
+  
+
   return {
+    createSignInUser,
     checkSignInUser,
     getGeneratedSignInToken,
     generateSignInToken

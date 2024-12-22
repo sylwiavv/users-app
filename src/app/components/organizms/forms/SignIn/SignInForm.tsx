@@ -2,11 +2,15 @@ import FormField from "../../../atoms/FormField/FormField";
 import { useForm } from "../../../../hooks/useForm";
 import { signInValidate } from "../../forms/SignIn/SignInValidate";
 import { useSignInUser } from "../../../../../server-actions/hooks/useSignInUser";
-import { ISigInUser } from "../../../../types/users"
+import { ISigInUser } from "../../../../types/users";
 import { useBcrypt } from "../../../../../server-actions/hooks/useBcrypt";
 import { NavLink, useNavigate } from "react-router-dom";
-import {generateToken} from "../../../../../server-actions/hooks/useGenerateToken"
-import {useAuth} from "../../../../context/AuthContext";
+import { generateToken } from "../../../../../server-actions/hooks/useGenerateToken";
+import { useAuth } from "../../../../context/AuthContext";
+import {
+  ESnackbarTypes,
+  useSnackbar,
+} from "../../../../context/SnackbarContex";
 
 interface IFormData {
   email: string;
@@ -19,9 +23,11 @@ export const SignInForm = () => {
     email: "",
   };
 
-  const { checkSignInUser, generateSignInToken } = useSignInUser();
+  const { checkSignInUser, generateSignInToken, createSignInUser } =
+    useSignInUser();
   const { checkBcryptPasswordHash } = useBcrypt();
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const findPassingUser = (email: string, users: ISigInUser[]) => {
     const emailFormatted = email.toLowerCase().trim();
@@ -33,37 +39,51 @@ export const SignInForm = () => {
   const { login } = useAuth();
 
   const checkBcryptPassword = async ({ password, email }: IFormData) => {
-    const users = await checkSignInUser();
+    // const users = await checkSignInUser();
 
-    const passingUser = findPassingUser(email, users);
+    // const passingUser = findPassingUser(email, users);
 
-    if (!passingUser) return;
+    // if (!passingUser) return;
 
-    const hashedPassword = passingUser.password;
+    // const hashedPassword = passingUser.password;
 
-    const passwordPassing = await checkBcryptPasswordHash(
-      hashedPassword,
-      password
-    );
+    // const passwordPassing = await checkBcryptPasswordHash(
+    //   hashedPassword,
+    //   password
+    // );
 
-    if (passwordPassing) {
-      // here will be snackbar success
-      const token = generateToken()
-      const data = {email, token}
+    const dataSignInUser = { password, email };
+    const response = await createSignInUser(dataSignInUser);
+    console.log(response)
 
-      generateSignInToken(data)
+    // if (response.status === 201) {
+    //   enqueueSnackbar("Correct", {
+    //     variant: ESnackbarTypes.SUCCESS,
+    //   });
+    // } else {
+    //   enqueueSnackbar(response.error.message, {
+    //     variant: ESnackbarTypes.ERROR,
+    //   });
+    // }
 
-      sessionStorage.setItem(
-        "currentUser",
-        JSON.stringify({ isAuthenticated: true, id: passingUser.id, email, token })
-      );
-      login({isAuthenticated: true, id: passingUser.id, email})
+    // if (passwordPassing) {
+    //   // here will be snackbar success
+    //   const token = generateToken()
+    //   const data = {email, token}
 
-      navigate("/address-book");
-  
-    } else {
-      // here will be snackbar error
-    }
+    //   generateSignInToken(data)
+
+    //   sessionStorage.setItem(
+    //     "currentUser",
+    //     JSON.stringify({ isAuthenticated: true, id: passingUser.id, email, token })
+    //   );
+    //   login({isAuthenticated: true, id: passingUser.id, email})
+
+    // navigate("/address-book");
+
+    // } else {
+    //   // here will be snackbar error
+    // }
   };
 
   const handleOnSubmit = () => {
@@ -113,12 +133,7 @@ export const SignInForm = () => {
       </div>
       <div className="signin__form-group">
         <p className="signin__signup-link">
-     
-          <NavLink to={"/signup"}>
-          Don't have an account?{" "}
-          Sign Up here 
-          </NavLink>
-
+          <NavLink to={"/signup"}>Don't have an account? Sign Up here</NavLink>
         </p>
       </div>
     </form>

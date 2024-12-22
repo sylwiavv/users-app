@@ -9,41 +9,52 @@ datasource db {
 
 model Manager {
   id        String @id @default(cuid())
-  firstName String @map("first_name")
-  lastName  String @map("last_name")
+  first_name String @map("first_name")
+  last_name  String @map("last_name")
 }
 
 model Visa {
-  id             Int    @id @default(autoincrement())
-  issuingCountry String @map("issuing_country")
-  type           String
-  startDate      Int    @map("start_date")
-  endDate        Int    @map("end_date")
-  userId         String
+  id              String   @id @default(cuid())
+  issuingCountry  String
+  type            String
+  startDate       DateTime
+  endDate         DateTime
 }
 
+model UserSignInData {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String  
+  userId    String   
+  user      User     @relation(fields: [userId], references: [id])
+}
 
 model User {
-  id               String        @id @default(cuid())
-  isRemoteWork     Boolean       @map("is_remote_work")
-  userAvatar       String        @map("user_avatar")
-  firstName        String        @map("first_name")
-  lastName         String        @map("last_name")
-  firstNativeName  String?        @map("first_native_name")
-  lastNativeName   String?        @map("last_native_name")
-  middleNativeName String?        @map("middle_native_name")
-  department       String
-  building         String
-  room             String
-  deskNumber       Int?          @map("desk_number")
-  phone            String
-  email            String
-  skype            String
-  cnumber          String
-  citizenship      String
-  role             UserRole      @default(EMPLOYEE)
-  dateOfBirth      String
+  id                 String   @id @default(cuid())
+  isRemoteWork       Boolean  @default(false) @map("is_remote_work")
+  user_avatar        String?  @map("user_avatar")
+  first_name         String   @map("first_name")
+  last_name          String   @map("last_name")
+  first_native_name  String?  @map("first_native_name")
+  last_native_name   String?  @map("last_native_name")
+  middle_native_Name String?  @map("middle_native_name")
+  department         String
+  building           String
+  room               String
+  desk_Number        Int?     @map("desk_number")
+  phone              String
+  email              String
+  skype              String
+  cnumber            String
+  citizenship        String
+  role               UserRole @default(EMPLOYEE)
+  date_birth         String
+  visa               Json?    @map("visa") 
+  manager            Json?    @map("manager") 
+
+  UserSignInData UserSignInData[]
 }
+
 
 enum UserRole {
   EMPLOYEE
@@ -53,7 +64,6 @@ enum UserRole {
 
 model SignInUser {
   id              String  @id @default(cuid())
-  email           String
+  email           String  @unique
   password        String
-  isAuthenticated Boolean
 }
