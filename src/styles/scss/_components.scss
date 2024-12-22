@@ -1,0 +1,173 @@
+@use "../variables" as vars;
+
+.rounded-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  border-radius: 24px;
+  background-color: vars.$dark-blue-secondary;
+
+  text-transform: uppercase;
+  padding: vars.$space-s vars.$space-s;
+}
+
+.rounded {
+  border-radius: 50%;
+}
+
+.svg-icon {
+  vertical-align: middle;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.blue-button {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.9rem;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+
+  background-color: vars.$light-blue;
+  color: white;
+  padding: vars.$space-m;
+  border: none;
+  border-radius: 4px;
+
+  text-transform: uppercase;
+  transition: background-color 0.2s ease-in-out;
+
+  width: 100%;
+}
+
+.blue-button:hover {
+  background-color: vars.$light-blue-hover;
+}
+
+.box-shadow {
+  -webkit-box-shadow: 1px -1px 31px -15px rgba(226, 226, 226, 1);
+  -moz-box-shadow: 1px -1px 31px -15px rgba(226, 226, 226, 1);
+  box-shadow: 1px -1px 31px -15px rgba(226, 226, 226, 1);
+}
+
+.loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+
+  background: rgb(245, 245, 250);
+  background: rgb(245, 245, 250);
+  background: radial-gradient(
+    circle,
+    rgba(245, 245, 250, 1) 23%,
+    rgba(227, 227, 241, 1) 95%
+  );
+}
+
+.loader-container--icon {
+  width: 48px;
+  height: 48px;
+  border: 5px solid vars.$dark-black;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+
+  animation: rotation 1s linear infinite;
+}
+
+.sharp-button {
+  border-radius: 2px;
+  border: vars.$base-border;
+  font-weight: 600;
+  color: vars.$white;
+  background-color: vars.$light-blue;
+  text-transform: uppercase;
+  letter-spacing: 0.025rem;
+  padding: calc(vars.$space-s + vars.$space-xs) vars.$space-m;
+  min-width: 120px;
+
+  &:disabled {
+    background-color: vars.$white;
+    color: vars.$dark-gray;
+  }
+
+  &:disabled:hover {
+    cursor: default;
+  }
+}
+
+button {
+  border-radius: 4px;
+  transition: background-color .3s ease-in-out;
+}
+
+@media only screen and (max-width: 580px) {
+  .sharp-button {
+    font-size: vars.$font-size-sm;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.go-back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: vars.$space-s;
+  margin-bottom: vars.$space-m;
+  border-radius: 50%;
+  font-size: 12px;
+  color: vars.$light-gray-secondary;
+
+  transition: background-color 0.3s ease-in-out;
+}
+
+.custom-svg-icon {
+  width: 14px;
+  height: 14px;
+
+  fill: vars.$dark-gray;
+
+}
+
+.loader-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+.custom-loader {
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  border:8px solid;
+  border-color:vars.$light-blue #0000;
+  animation:s1 1s infinite;
+}
+@keyframes s1 {to{transform: rotate(.5turn)}}

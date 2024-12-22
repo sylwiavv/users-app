@@ -1,0 +1,188 @@
+@use "../variables" as vars;
+
+form {
+  display: flex;
+  flex-direction: column;
+
+  &:button {
+    margin-top: vars.$space-m;
+  }
+
+  &:input {
+    margin-bottom: vars.$space-m;
+    &::hover {
+      border: 1px solid vars.$light-gray-third;
+    }
+  }
+
+  .row-50 {
+    max-width: 50%;
+  }
+
+  // &.row div label {
+  //   display: flex;
+  //   margin-bottom: calc(vars.$space-m + vars.$space-xs);
+  // }
+}
+
+input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: vars.$space-m vars.$space-s;
+  border-radius: 4px;
+  border: 1px solid vars.$light-gray-secondary;
+  width: 100%;
+  border: 1px solid vars.$light-gray;
+  transition: border-color 0.2s ease-in-out;
+
+  &::placeholder {
+    font-size: calc(vars.$font-size-md);
+    color: vars.$light-gray-secondary;
+  }
+}
+
+input,
+select {
+  width: 100%;
+  padding: vars.$space-s;
+  border: 1px solid vars.$light-gray;
+  border-radius: 4px;
+  transition: border-color 0.2s ease-in-out;
+
+  &:hover {
+    border: 1px solid vars.$light-gray-third;
+  }
+}
+
+select {
+  appearance: none;
+  background: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%234a5568" d="M2 0L0 2h4zM2 5L0 3h4z"/></svg>')
+    no-repeat right 0.75rem center;
+  background-size: 0.65rem;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: vars.$space-m;
+}
+
+.input-with-icon {
+  font-size: calc(vars.$font-size-sm + 0.4rem);
+  display: flex;
+  align-items: center;
+  line-height: 1.4375em;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  border-radius: 4px;
+
+  border: 1px solid vars.$light-gray;
+  padding-left: vars.$space-s;
+
+  transition: border 0.4s ease-in-out;
+
+  &:hover {
+    content: "";
+    border: 1px solid vars.$dark-gray;
+  }
+
+  &__icon {
+    display: flex;
+    align-self: center;
+    background-color: white;
+    width: 20px;
+    fill: vars.$dark-gray;
+    opacity: 0.2;
+  }
+
+  &__input {
+    background-color: transparent;
+    border: none;
+    overflow: unset;
+  }
+}
+
+.input-label__wrapper {
+  &__label {
+    opacity: 0.7;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  &__error {
+    font-size: vars.$font-size-sm;
+    color: vars.$error-primary;
+    margin-top: vars.$space-xs;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
+  }
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: vars.$space-m;
+  margin-top: vars.$space-xl;
+
+  &__send,
+  &__cancel {
+    font-weight: 600;
+    font-size: calc(vars.$font-size-sm + 0.4rem);
+    padding: vars.$space-s vars.$space-m;
+  }
+
+  &__cancel {
+    &:hover {
+      background-color: vars.$light-gray;
+    }
+  }
+
+  &__send {
+    color: vars.$white;
+    background-color: vars.$success-primary;
+
+    &:hover {
+      background-color: vars.$success-primary-dark;
+    }
+  }
+}
+
+.form-section {
+  // background-color: #dee0e2;
+  margin-bottom: vars.$space-m;
+  &__title {
+    color: vars.$dark-gray;
+    letter-spacing: 0.05rem;
+    font-size: calc(vars.$font-size-xl - 0.4rem);
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: vars.$space-m;
+    padding-bottom: vars.$space-s;
+    border-bottom: vars.$base-border;
+  }
+
+  &__inputs-wrapper {
+    background-color: lightblue;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+  }
+
+  &.checkbox-field__wrapper {
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$space-xl;
+}

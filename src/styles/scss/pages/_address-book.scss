@@ -1,0 +1,145 @@
+@use "../../variables" as vars;
+
+.address-book {
+  background-color: #f9f9f9;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+  &__content {
+    grid-column: span 3;
+  }
+
+  &__header {
+    font-size: calc(vars.$font-size-base + 0.2rem);
+    border-bottom: vars.$base-border;
+    font-weight: 600;
+
+    .item {
+      position: relative;
+      text-align: center;
+    }
+
+    .item:not(:last-child) {
+      border-right: vars.$base-border;
+      padding-right: vars.$space-m;
+    }
+  }
+
+  &__content__user {
+    .edit-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: calc(vars.$space-s + vars.$space-xs) vars.$space-m;
+    }
+
+    &:not(:last-child) {
+      border-bottom: vars.$base-border;
+    }
+
+    &:nth-child(odd) {
+      background-color: #fff;
+    }
+
+    // &:nth-child(even) {
+    // //   background-color: red;
+    // }
+
+    &__personal {
+      display: flex;
+      align-items: center;
+      gap: vars.$space-m;
+
+      &__photo {
+        height: 50px;
+      }
+
+      &__name {
+        display: flex;
+        flex-direction: column;
+        gap: vars.$space-s;
+        font-weight: 600;
+
+        grid-column: 1/2;
+
+        &-translated {
+          font-size: calc(vars.$font-size-md + 0.3rem);
+        }
+
+        &-native {
+          color: vars.$dark-gray;
+          font-size: calc(vars.$font-size-sm + 0.2rem);
+        }
+      }
+    }
+
+    &__role {
+      grid-column: 2/3;
+    }
+
+    &__role,
+    &__admin {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: vars.$space-s;
+    }
+  }
+}
+
+// Common table styles
+.address-book {
+  &__content__user,
+  &__header {
+    display: grid;
+    grid-template-columns: minmax(250px, 2fr) 3fr 1fr 1fr;
+    gap: vars.$space-m;
+    padding: vars.$space-m;
+    align-items: center;
+  }
+}
+
+/* Mobile ------------------ */
+@media only screen and (max-width: 580px) {
+  .address-book {
+    &__header {
+      display: block;
+
+      .item:not(:first-child) {
+        display: none;
+      }
+
+      .item:not(:last-child) {
+        border: none;
+      }
+    }
+
+    &__content__user {
+      &__role,
+      &__admin {
+        justify-content: flex-start;
+        gap: vars.$space-m;
+      }
+    }
+  }
+
+  .address-book__content__user {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &__role:before,
+    &__isAdmin:before {
+      font-weight: 600;
+      padding-right: vars.$space-s;
+    }
+
+    &__role:before {
+      content: "Address book role";
+    }
+
+    &__isAdmin:before {
+      content: "Admin";
+    }
+  }
+}

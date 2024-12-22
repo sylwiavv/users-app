@@ -1,0 +1,88 @@
+@use "../variables" as vars;
+
+.employee-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: vars.$space-m;
+  
+  &__user-count {
+    font-weight: 600;
+    opacity: .8;
+  }
+}
+
+/* Single empolyee card */
+.employee-card {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  border-radius: 8px;
+  text-align: center;
+  background-color: vars.$white;
+  padding: vars.$space-l;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  &__label {
+    padding:vars.$space-xs;
+    font-weight: 600;
+    position: absolute;
+    // color: vars.$success-primary-dark;
+    color: vars.$white;
+    background-color: vars.$success-primary;
+    top: 8px;
+    right: 8px;
+    text-align: end;
+    border-radius: 4px;
+  }
+
+  &__role {
+    position: absolute;
+  }
+
+  &__details {
+    display: flex;
+    justify-content: space-between;
+    border-top: vars.$base-border;
+    padding-top: vars.$space-l;
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+
+  &__avatar {
+    padding-bottom: vars.$space-l;
+  
+    h4 {
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+  
+    img {
+      padding-bottom: vars.$space-l;
+      max-width: 100%;
+      width: 150px;
+    }
+
+    .user-details__role {
+      top: vars.$space-s;
+      left: vars.$space-s;
+      position: absolute;
+    }
+  }
+}
+
+
+.employee-card__detail {
+  display: flex;
+  align-items: center;
+  gap: vars.$space-s;
+}
+
+.employee-card__icon {
+  color: vars.$light-blue;
+}

@@ -1,0 +1,61 @@
+@use "../styles/scss/mixins";
+
+/* Colors */
+$dark-blue: #1f60be;
+$dark-blue-secondary: #1550af;
+
+$light-blue: #4299e1;
+$light-blue-hover: #2180cf;
+
+$light-gray: #e2e8f0;
+$light-gray-secondary: #798894;
+$light-gray-third: #b1b9c2;
+
+$dark-black: #313b45;
+$dark-gray: #4a5162;
+
+$white: #f9f9f9;
+$white-secondary: #f3f3f3;
+
+$border-color-primary: #ddd;
+
+/* Alert colors */
+$error-primary: #f32b35;
+$error-primary-dark: #de0d17;
+
+$success-primary: #6ec06e;
+$success-primary-dark: #4caf4c;
+
+$warning-primary: #fdc51c;
+$warning-primary-dark: #e4ac02;
+
+$info-primary: #52adf6;
+$info-primary-dark: #2296f3;
+
+$main-color: #f5f5fa;
+
+/* Space */
+$space-xs: 0.25rem; /*  4px */
+$space-s: 0.5rem; /*  8px  */
+$space-m: 1rem; /* 16px  */
+$space-l: 1.5rem; /*24px  */
+$space-xl: 1.75rem; /* 28px  */
+$space-xxl: 2rem; /* 32px  */
+
+
+$transition-all: all 0.3s ease-out;
+
+$max-width: 1460px;
+
+/* Font-size */
+$font-size-base: 1rem; /* Default font size */
+$font-size-sm: 0.8rem; /* Smaller font size */
+$font-size-md: 0.9rem; /* Medium font size */
+$font-size-lg: 1.2rem; /* Large font size */
+$font-size-xl: 1.5rem; /* Extra large font size */
+$font-size-xxl: 2.4rem; /* XXL font size */
+
+/* Borders */
+$base-border: 1px solid #ddd;
+
+

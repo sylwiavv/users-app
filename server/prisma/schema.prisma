@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Manager {
+  id        String @id @default(cuid())
+  firstName String @map("first_name")
+  lastName  String @map("last_name")
+}
+
+model Visa {
+  id             Int    @id @default(autoincrement())
+  issuingCountry String @map("issuing_country")
+  type           String
+  startDate      Int    @map("start_date")
+  endDate        Int    @map("end_date")
+  userId         String
+}
+
+
+model User {
+  id               String        @id @default(cuid())
+  isRemoteWork     Boolean       @map("is_remote_work")
+  userAvatar       String        @map("user_avatar")
+  firstName        String        @map("first_name")
+  lastName         String        @map("last_name")
+  firstNativeName  String?        @map("first_native_name")
+  lastNativeName   String?        @map("last_native_name")
+  middleNativeName String?        @map("middle_native_name")
+  department       String
+  building         String
+  room             String
+  deskNumber       Int?          @map("desk_number")
+  phone            String
+  email            String
+  skype            String
+  cnumber          String
+  citizenship      String
+  role             UserRole      @default(EMPLOYEE)
+  dateOfBirth      String
+}
+
+enum UserRole {
+  EMPLOYEE
+  ADMIN
+  HR
+}
+
+model SignInUser {
+  id              String  @id @default(cuid())
+  email           String
+  password        String
+  isAuthenticated Boolean
+}

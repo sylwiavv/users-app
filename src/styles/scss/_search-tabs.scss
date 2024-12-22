@@ -1,0 +1,57 @@
+@use "../variables" as vars;
+
+.search-tabs > input {
+  &:first-child:checked ~ .search-tabs-content .tab-content:first-child, &:nth-child(2):checked ~ .search-tabs-content .tab-content:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.search-tabs-content .tab-content {
+  display: none;
+}
+
+.tabs-labels {
+  display: flex;
+}
+
+.tabs-labels .tab-label {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.4;
+  flex: 1;
+  font-size: 0.9rem;
+  letter-spacing: 0.6px;
+  color: vars.$light-gray-third;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  padding-bottom: vars.$space-m;
+  font-weight: 600;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.search-tabs > input {
+  &:first-child:checked ~ .tabs-labels label[for="basic-search"], &:nth-child(2):checked ~ .tabs-labels label[for="advanced-search"] {
+    color: vars.$dark-black;
+    border-bottom: 4px solid vars.$light-blue;
+  }
+}
+
+.tab-content {
+  display: flex;
+  gap: vars.$space-m;
+  padding: vars.$space-l;
+  background-color: vars.$white;
+  border-radius: 4px;
+}
+
+/* Mobile ------------------ */
+@media only screen and (max-width: 950px) {
+  .search-tabs-content {
+    margin-bottom: vars.$space-l;
+  }
+}

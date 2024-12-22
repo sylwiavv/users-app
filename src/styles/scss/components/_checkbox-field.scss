@@ -1,0 +1,47 @@
+@use "../../variables" as vars;
+
+.checkbox-field__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+
+  .checkbox-field__label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    // font-size: vars.fo
+
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 1px solid vars.$dark-gray;
+      margin-right: vars.$space-s;
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+
+      &:checked {
+        background-color: vars.$dark-blue;
+        border-color: vars.$dark-blue;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 10px;
+          height: 10px;
+          background-color: vars.$white;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
+}
+
+.checkbox-field__label input[type="checkbox"] {
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}

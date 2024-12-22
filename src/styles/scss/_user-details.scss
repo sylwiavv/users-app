@@ -1,0 +1,231 @@
+@use "../variables" as vars;
+
+.user-details {
+  &__subtitle {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: vars.$light-gray-secondary;
+    padding-bottom: vars.$space-m;
+    margin-bottom: vars.$space-m;
+    border-bottom: 1px solid vars.$light-gray;
+  }
+
+  &__actions {
+    grid-column: 1/2;
+  }
+
+  &__role {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: vars.$dark-blue;
+    font-weight: 700;
+    opacity: 0.4;
+    margin-bottom: vars.$space-xs;
+  }
+
+  &__avatar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.user-details__actions {
+  position: relative;
+  padding-right: vars.$space-l;
+  z-index: 1;
+
+  &:after {
+    content: "";
+    border-right: 1px solid vars.$light-gray;
+    position: absolute;
+    top: -24px;
+    right: 0;
+    width: 100%;
+    height: calc(100% + 48px);
+    z-index: -1;
+  }
+}
+
+.user-details__label {
+  color: vars.$light-gray-third;
+}
+
+.user-details__avatar-img {
+  margin-bottom: vars.$space-l;
+  max-width: 100%;
+  width: 150px;
+}
+
+.user-details__personal {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: vars.$space-s;
+  padding-top: vars.$space-l;
+
+  &__name-translated {
+    font-weight: 600;
+    margin-bottom: vars.$space-xs;
+  }
+
+  &__name-native {
+    opacity: 0.5;
+  }
+}
+
+.user-details__personal-copy-button {
+  background-color: #f0f0f5;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: vars.$space-s;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  border-radius: 24px;
+  margin-top: vars.$space-m;
+  padding: calc(vars.$space-s + vars.$space-xs) vars.$space-m;
+
+  i {
+    color: vars.$light-gray-secondary;
+  }
+}
+
+.edit-button {
+  color: vars.$dark-black;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: vars.$space-s;
+  border: 1px solid vars.$light-gray;
+  border-radius: 4px;
+  background-color: vars.$white;
+  text-transform: uppercase;
+  margin-top: vars.$space-xl;
+  padding: vars.$space-s vars.$space-m;
+
+  &:hover {
+    background-color: #fbfbfb;
+  }
+
+  i {
+    color: vars.$dark-blue;
+  }
+}
+
+.user-details__item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: vars.$space-s;
+
+  &:not(:last-child) {
+    margin-bottom: vars.$space-m;
+  }
+}
+
+.user-details__icon {
+  color: vars.$dark-blue;
+  display: flex;
+  align-items: center;
+  max-width: 48px;
+  flex: 1;
+  font-weight: 700;
+
+  .custom-svg-icon {
+    fill: vars.$dark-blue;
+  }
+}
+
+.user-details__icon-and-label {
+  display: flex;
+  flex: 3;
+}
+
+.user-details__data {
+  display: flex;
+  flex-direction: column;
+  gap: calc(vars.$space-xl * 2);
+}
+
+.user-details__actions-buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: vars.$space-xl;
+  width: 100%;
+
+  .edit-user-options {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: vars.$white;
+    box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px,
+      rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px,
+      rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px,
+      rgba(42, 51, 70, 0.04) 0px 6px 6px -3px,
+      rgba(14, 63, 126, 0.04) 0px 12px 12px -6px,
+      rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
+    border-radius: 8px;
+    transition: background-color, 0.3s ease-in-out, opacity, 0.3s ease-in-out;
+
+    .option {
+      padding: calc(vars.$space-s + vars.$space-xs) vars.$space-m;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #f3f3f3;
+      }
+    }
+
+    &__permissions {
+      color: vars.$error-primary;
+      line-height: 1.5rem;
+      margin: auto;
+      padding: vars.$space-xxl vars.$space-m;
+
+      .custom-svg-icon {
+        fill: vars.$error-primary;
+        margin-right: vars.$space-s;
+      }
+    }
+  }
+}
+
+/* Mobile ------------------ */
+@media only screen and (max-width: 950px) {
+  .user-details__actions:after {
+    display: none;
+  }
+}
+
+/* Mobile ------------------ */
+@media only screen and (max-width: 600px) {
+  .user-details__avatar {
+    margin-bottom: vars.$space-xl;
+    padding: 0;
+    width: 100%;
+  }
+
+  .user-details__personal {
+    width: 100%;
+  }
+
+  .user-details__item {
+    grid-template-columns: 1fr;
+  }
+
+  .user-details {
+    display: block;
+  }
+
+  .user-details__icon-and-label {
+    gap: vars.$space-s;
+  }
+
+  .user-details__actions {
+    padding-right: 0;
+  }
+}

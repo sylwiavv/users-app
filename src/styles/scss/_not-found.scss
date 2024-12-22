@@ -1,0 +1,24 @@
+@use "../variables" as vars;
+.not-found-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: vars.$space-xl;
+  height: 100%;
+  background-color: vars.$light-gray; 
+  border: 1px solid vars.$border-color-primary;
+
+  h2 {
+    font-weight: 700;
+    font-size: 2rem;
+    color: vars.$dark-blue;
+  }
+
+  p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: vars.$light-gray-secondary;
+  }
+}

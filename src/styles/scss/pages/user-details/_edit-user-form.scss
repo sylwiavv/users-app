@@ -1,0 +1,19 @@
+@use "./../../../variables" as vars;
+
+.user-edit-role {
+  &__header {
+    &-title {
+      font-weight: 700;
+      font-size: calc(vars.$font-size-base + vars.$font-size-sm);
+      margin-bottom: vars.$space-xl;
+    }
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$space-m;
+    font-size: calc(vars.$font-size-lg);
+    margin-bottom: vars.$space-xl;
+  }
+}

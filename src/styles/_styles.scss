@@ -1,0 +1,25 @@
+@use "./scss/advanced-form";
+@use "./scss/_snackbar";
+@use "./scss/_components";
+@use "./scss/_employee-list";
+@use "./scss/_forms";
+@use "./scss/_header";
+@use "./scss/_layout-toggler";
+@use "./scss/_layout";
+@use "./scss/_main";
+@use "./scss/_not-found";
+@use "./scss/_search-tabs";
+@use "./scss/_sigin";
+@use "./scss/_user-details";
+@use "./_resset.scss";
+/* Pages */
+@use "./scss/pages/address-book";
+
+@use "./scss/pages//user-details/edit-user-form";
+@use "./scss/components/loaders.scss";
+
+/* Components */
+@use "./scss/components/modal";
+@use "./scss//components//checkbox-field";
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:wght@100..900&display=swap');

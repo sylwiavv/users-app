@@ -1,0 +1,151 @@
+@use "../variables" as vars;
+body {
+  background-color: vars.$main-color;
+
+  font-family: "Montserrat", sans-serif;
+  color: vars.$dark-black;
+
+  position: relative;
+
+
+  &.loading {
+    width: 100vw;
+    height: 100vh;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: vars.$light-blue;
+    }
+
+    > main {
+      display: none;
+    }
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", serif;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+p,
+li,
+a {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+
+.transition-color {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover,
+[role="switch"] {
+  cursor: pointer;
+}
+
+/* Header Styles */
+.header {
+  background-color: vars.$dark-blue;
+  border-bottom: 4px solid vars.$dark-blue-secondary;
+  margin-bottom: vars.$space-l;
+
+  * {
+    color: vars.$white;
+    letter-spacing: 0.5px;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: vars.$max-width;
+    margin: auto;
+    padding: vars.$space-s vars.$space-l;
+
+    @media only screen and (max-width: 800px) {
+      display: block;
+      padding: vars.$space-m vars.$space-l;
+
+      .nav-tabs {
+        margin: vars.$space-m 0;
+      }
+
+      .nav-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: vars.$space-xs;
+      }
+    }
+  }
+
+  /* Logo section */
+  .logo {
+    .app-name {
+      color: vars.$white;
+      opacity: 0.7;
+      font-size: 12px;
+      margin-bottom: vars.$space-xs;
+      margin: 0;
+      letter-spacing: 0.8px;
+    }
+
+    .subtitle {
+      font-weight: 700;
+    }
+  }
+}
+
+.support-btn {
+  .svg-icon {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+
+.user-info {
+  display: flex;
+  align-items: center;
+
+  .user-name {
+    line-height: 1.1rem;
+    font-weight: bold;
+  }
+
+  img {
+    height: 32px;
+    width: 32px;
+  }
+}
+
+.fa-border-all,
+.fa-bars {
+  color: vars.$light-gray-third;
+}

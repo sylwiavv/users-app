@@ -1,0 +1,63 @@
+@use "../variables" as vars;
+
+.snackbar {
+  position: fixed;
+  top: 20px;
+  right: 20px; 
+  z-index: 9999;
+  padding: vars.$space-m vars.$space-xl;
+  border-radius: 4px;
+  color: vars.$white;
+  font-size: vars.$font-size-md;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; 
+  transform: translateY(-50px); 
+  animation: slideIn 0.5s forwards;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color, .4s ease-in-out;
+  
+  &.snackbar--success {
+    background-color: vars.$success-primary;
+
+    &:hover {
+      background-color: vars.$success-primary-dark;
+    }
+  }
+
+  &.snackbar--error {
+    background-color: vars.$error-primary;
+
+    &:hover {
+      background-color: vars.$error-primary-dark;
+    }
+  }
+
+  &.snackbar--info {
+    background-color: vars.$info-primary;
+    
+    &:hover {
+      background-color: vars.$info-primary-dark;
+    }
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.snackbar--hidden {
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+

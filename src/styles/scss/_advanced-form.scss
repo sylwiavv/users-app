@@ -1,0 +1,32 @@
+@use "../variables" as vars;
+
+form {
+  input:focus, select:focus {
+    border-color: vars.$light-blue;
+    outline: none;
+  }
+}
+
+.row {
+  display: flex;
+  gap: vars.$space-s;
+  margin-bottom: vars.$space-s;
+  // flex-direction: column;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.error {
+  font-size: .8rem;
+  color: vars.$error-primary;
+  margin-top: vars.$space-s;
+}
+
+/* Mobile */
+@media (max-width: 400px) {
+  .row {
+    flex-direction: column;
+  }
+}

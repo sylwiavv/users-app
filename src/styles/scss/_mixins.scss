@@ -1,0 +1,29 @@
+@mixin flexbox($justify: flex-start, $align: stretch, $direction: row, $wrap: nowrap, $gap: 0) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    gap: $gap;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+  }
+  
+  @mixin button-styles($text-color, $bg-color, $icon-color) {
+    color: $text-color;
+    background-color: $bg-color;
+    transition: background-color 0.3s ease, color 0.3s ease, fill 0.3s ease;
+  
+    svg {
+      fill: $icon-color;
+      transition: fill 0.3s ease;
+    }
+  
+    &:hover {
+      color: darken($text-color, 15%);
+      background-color: darken($bg-color, 15%);
+      
+      svg {
+        fill: darken($icon-color, 15%);
+      }
+    }
+  }
+  
