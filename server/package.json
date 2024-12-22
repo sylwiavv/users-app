@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "migrate": "prisma migrate dev"
-  },
+    "migrate": "prisma migrate dev",
+    "vercel-build": "prisma generate && prisma migrate deploy && nodemon src/index.ts"
+    },
   "author": "",
   "license": "ISC",
   "dependencies": {
