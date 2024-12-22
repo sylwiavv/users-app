@@ -18,8 +18,11 @@
       "noEmit": false,
       "esModuleInterop": true,
       "resolveJsonModule": true,
-      "baseUrl": "src"
+      "baseUrl": "src",
+      "strict": true,
+      "skipLibCheck": true,
+      "types": ["node", "@vercel/node"]
     },
-    "include": ["src/**/*.ts"],
+    "include": ["api/**/*.ts", "utils/**/*.ts"],
     "exclude": ["node_modules"]
   }

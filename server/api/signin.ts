@@ -1,9 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { allowCors } from './utils/allowCors';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
+async function signInUser(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'POST') {
     const { email, password } = req.body;
 
@@ -34,3 +36,5 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: { status: 405, message: 'Method Not Allowed' } });
   }
 }
+
+export default allowCors(signInUser)
