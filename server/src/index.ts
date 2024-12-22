@@ -13,6 +13,10 @@ app.get('*', (req, res) => {
 
 app.use('/users', require('./routes/userRoute'))
 
+app.get('/home', (req, res) => {
+    res.status(200).json('Welcome, your app is working well');
+  });
+
 app.listen(port, () => {
     console.log(`App is listening on dd ${port}`)
 })
