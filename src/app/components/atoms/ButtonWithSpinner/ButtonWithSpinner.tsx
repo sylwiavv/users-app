@@ -21,7 +21,7 @@ export const ButtonWithSpinner: React.FC<ButtonWithSpinnerProps> = ({
   return (
     <button
       type={type}
-      className={`button-with-spinner ${className}`}
+      className={`${className} button-with-spinner`}
       onClick={onClick}
       disabled={isLoading || disabled}
     >

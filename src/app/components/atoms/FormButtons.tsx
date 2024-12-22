@@ -11,7 +11,7 @@ export const FormButtons = ({onClose, onSend, isLoading, type="button"}: IFormBu
     return (
         <div className="form-buttons">
             <button className="form-buttons__cancel" disabled={isLoading} onClick={onClose}>Cancel</button>
-            <ButtonWithSpinner type={type} className="form-buttons__send" isLoading={isLoading} onClick={onSend}>Send</ButtonWithSpinner>
+            <ButtonWithSpinner type={type} isLoading={isLoading} onClick={onSend}>Send</ButtonWithSpinner>
         </div>
     )
 }

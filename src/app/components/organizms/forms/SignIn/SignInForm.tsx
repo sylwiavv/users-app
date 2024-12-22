@@ -11,6 +11,8 @@ import {
   ESnackbarTypes,
   useSnackbar,
 } from "../../../../context/SnackbarContex";
+import { ButtonWithSpinner } from "../../../atoms/ButtonWithSpinner/ButtonWithSpinner";
+import { useState } from "react";
 
 interface IFormData {
   email: string;
@@ -29,6 +31,8 @@ export const SignInForm = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const findPassingUser = (email: string, users: ISigInUser[]) => {
     const emailFormatted = email.toLowerCase().trim();
     return users.find(
@@ -38,52 +42,40 @@ export const SignInForm = () => {
 
   const { login } = useAuth();
 
-  const checkBcryptPassword = async ({ password, email }: IFormData) => {
-    // const users = await checkSignInUser();
-
-    // const passingUser = findPassingUser(email, users);
-
-    // if (!passingUser) return;
-
-    // const hashedPassword = passingUser.password;
-
-    // const passwordPassing = await checkBcryptPasswordHash(
-    //   hashedPassword,
-    //   password
-    // );
+  const signIn = async ({ password, email }: IFormData) => {
+    setIsLoading(true);
 
     const dataSignInUser = { password, email };
     const response = await createSignInUser(dataSignInUser);
-    console.log(response)
 
-    // if (response.status === 201) {
-    //   enqueueSnackbar("Correct", {
-    //     variant: ESnackbarTypes.SUCCESS,
-    //   });
-    // } else {
-    //   enqueueSnackbar(response.error.message, {
-    //     variant: ESnackbarTypes.ERROR,
-    //   });
-    // }
+    if (response.error) {
+      enqueueSnackbar(response.error.message, {
+        variant: ESnackbarTypes.ERROR,
+      });
+      setIsLoading(false);
+    } else if (response.data) {
+      enqueueSnackbar("Success", {
+        variant: ESnackbarTypes.SUCCESS,
+      });
+      setIsLoading(false);
 
-    // if (passwordPassing) {
-    //   // here will be snackbar success
-    //   const token = generateToken()
-    //   const data = {email, token}
+      const token = generateToken();
+      const data = { email, token };
+      generateSignInToken(data);
 
-    //   generateSignInToken(data)
+      sessionStorage.setItem(
+        "currentUser",
+        JSON.stringify({
+          isAuthenticated: true,
+          id: response.data.id,
+          email,
+          token,
+        })
+      );
+      login({ isAuthenticated: true, id: response.data.id, email });
 
-    //   sessionStorage.setItem(
-    //     "currentUser",
-    //     JSON.stringify({ isAuthenticated: true, id: passingUser.id, email, token })
-    //   );
-    //   login({isAuthenticated: true, id: passingUser.id, email})
-
-    // navigate("/address-book");
-
-    // } else {
-    //   // here will be snackbar error
-    // }
+      navigate("/address-book");
+    }
   };
 
   const handleOnSubmit = () => {
@@ -92,7 +84,7 @@ export const SignInForm = () => {
       password: formValues.password,
     };
 
-    checkBcryptPassword(formData);
+    signIn(formData);
   };
 
   const {
@@ -127,9 +119,14 @@ export const SignInForm = () => {
       />
 
       <div className="signin__form-group">
-        <button type="submit" className="signin__button blue-button">
-          Sign In
-        </button>
+        <ButtonWithSpinner
+          type={"submit"}
+          className="signin__button blue-button"
+          isLoading={isLoading}
+          onClick={handleOnSubmit}
+        >
+          Send
+        </ButtonWithSpinner>
       </div>
       <div className="signin__form-group">
         <p className="signin__signup-link">

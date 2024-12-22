@@ -14,25 +14,23 @@ export default async function handler(req, res) {
         },
       });
 
-      if (existingUser) {
-        return res.status(400).json({ error: 'Email already registered' });
+      if (!existingUser) {
+        return res.status(400).json({ error: { status: 404, message: 'Email not found' } });
       }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const passwordMatch = await bcrypt.compare(password, existingUser.password);
 
-      const newUser = await prisma.signInUser.create({
-        data: {
-          email,
-          password: hashedPassword,
-        },
-      });
+      if (!passwordMatch) {
+        return res.status(400).json({ error: { status: 401, message: 'Incorrect password' } });
+      }
 
-      return res.status(201).json({ data: newUser });
+      return res.status(200).json({ status: 200, data: existingUser });
+
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
   } else {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return res.status(405).json({ error: { status: 405, message: 'Method Not Allowed' } });
   }
 }
