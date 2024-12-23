@@ -58,10 +58,10 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        type: "asset/resource", // Nowoczesne podejście
+        type: "asset/resource",
         generator: {
           filename: "assets/[name][ext]",
-          publicPath: "/", // Poprawne ścieżki
+          publicPath: "/",
         },
       },
     ],
