@@ -6,17 +6,15 @@ module.exports = {
   mode: "development",
   entry: "./src/index.tsx",
   output: {
-    path: path.join(__dirname, "./src/dist"),
+    path: path.join(__dirname, "dist"),
     filename: "bundle.js",
-    publicPath: "/",
+    publicPath: "/", // Ścieżka root dla zasobów
   },
   devServer: {
     historyApiFallback: {
-      rewrites: [
-        { from: /^\/user-details/, to: "src/public/index.html" },
-      ],
+      rewrites: [{ from: /^\/user-details/, to: "src/public/index.html" }],
     },
-    static: path.join(__dirname, "./src/dist"),
+    static: path.join(__dirname, "./dist"),
     port: 8080,
   },
   plugins: [
@@ -25,10 +23,7 @@ module.exports = {
       favicon: "src/assets/favicon.svg",
     }),
     new CopyPlugin({
-      patterns: [
-        { from: "./src/assets", to: "assets" },
-        { from: "db.json", to: "db.json" },
-      ],
+      patterns: [{ from: "./src/assets", to: "assets" }],
     }),
   ],
   resolve: {
@@ -63,10 +58,10 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        type: "asset/resource",
+        type: "asset/resource", // Nowoczesne podejście
         generator: {
           filename: "assets/[name][ext]",
-          publicPath: "/", 
+          publicPath: "/", // Poprawne ścieżki
         },
       },
     ],

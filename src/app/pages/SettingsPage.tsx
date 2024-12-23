@@ -1,9 +1,9 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useUsers } from "../context/UsersContext";
 import { SettingsTableRow } from "../components/Settings/SettingsTableRow";
-import { MagnifyingGlassIcon } from "../../assets/icons/icons";
 import { IconFormField } from "../components/atoms/IconFormField/IconFormField";
 import { useSearchUser } from "../../server-actions/hooks/useSearchUser";
+import { MagnifyingGlassIcon } from "../../assets/icons/icons";
 
 const SettingsPage = () => {
   const { filteredUsers, refreshUsers, users, setFilteredUsers } = useUsers();

@@ -114,6 +114,12 @@ select {
     text-transform: capitalize;
   }
 
+  .input-with-icon__input {
+    &:hover {
+      border: none;
+    }
+  }
+
   &__error {
     font-size: vars.$font-size-sm;
     color: vars.$error-primary;

@@ -126,6 +126,11 @@
   align-items: center;
   pointer-events: all;
 
+  &_avatar-wrapper {
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
   .user-name {
     line-height: 1.1rem;
     font-weight: bold;

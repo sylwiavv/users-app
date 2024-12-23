@@ -28,6 +28,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    .user-details__avatar-img {
+      border-radius: 50%;
+    }
   }
 }
 
