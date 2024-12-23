@@ -25,10 +25,8 @@ export const PersonalForm = ({closeModal}: {closeModal: () => void}) => {
     (async () => {
       try {
         const response = await updateUser({ id, data: formValues });
-
         if (response?.status === 200) {
-          const updatedData = await response?.json();
-          setUserDetails(updatedData);
+          setUserDetails(response.data);
           closeModal()
         }
       } catch (e) {

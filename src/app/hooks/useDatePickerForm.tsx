@@ -20,7 +20,6 @@ export const useDatePickerForm = (
   const [datePickerFormValues, setDatePickerFormValues] = useState<TFormValues>(initialState);
   const [errors, setError] = useState<Record<string, string>>({});
 
-  // Obsługuje wysyłanie formularza
   const handleSubmit = async (e: React.FormEvent) => {
     if (e) e.preventDefault();
 

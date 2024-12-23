@@ -8,26 +8,26 @@ datasource db {
 }
 
 model Manager {
-  id        String @id @default(cuid())
+  id         String @id @default(cuid())
   first_name String @map("first_name")
   last_name  String @map("last_name")
 }
 
 model Visa {
-  id              String   @id @default(cuid())
-  issuingCountry  String
-  type            String
-  startDate       DateTime
-  endDate         DateTime
+  id             String   @id @default(cuid())
+  issuingCountry String
+  type           String
+  startDate      DateTime
+  endDate        DateTime
 }
 
-model UserSignInData {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String  
-  userId    String   
-  user      User     @relation(fields: [userId], references: [id])
-}
+// model UserSignInData {
+//   id       String @id @default(cuid())
+//   email    String @unique
+//   password String
+//   userId   String
+//   user     User   @relation(fields: [userId], references: [id])
+// }
 
 model User {
   id                 String   @id @default(cuid())
@@ -37,24 +37,22 @@ model User {
   last_name          String   @map("last_name")
   first_native_name  String?  @map("first_native_name")
   last_native_name   String?  @map("last_native_name")
-  middle_native_Name String?  @map("middle_native_name")
+  middle_native_name String?  @map("middle_native_name")
   department         String
   building           String
   room               String
-  desk_Number        Int?     @map("desk_number")
+  desk_number        Int?     @map("desk_number")
   phone              String
-  email              String
+  email              String   @unique
   skype              String
   cnumber            String
   citizenship        String
   role               UserRole @default(EMPLOYEE)
-  date_birth         String
-  visa               Json?    @map("visa") 
-  manager            Json?    @map("manager") 
-
-  UserSignInData UserSignInData[]
+  date_birth         Json     @map("date_birth")
+  visa               Json?    @map("visa")
+  password           String
+  manager_id          String
 }
-
 
 enum UserRole {
   EMPLOYEE
@@ -63,7 +61,7 @@ enum UserRole {
 }
 
 model SignInUser {
-  id              String  @id @default(cuid())
-  email           String  @unique
-  password        String
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
 }

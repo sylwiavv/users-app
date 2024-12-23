@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Header } from "./Header";
 import { Routes, Route, useLocation, Navigate } from "react-router";
 import {
@@ -11,10 +11,8 @@ import {
 } from "../pages";
 import PrivateRoutes from "../utils/ProtectedRoutes";
 import OnlyAdminRoute from "./OnlyAdminRoute/OnlyAdminRoute";
-
-interface IProps {
-  children: ReactNode;
-}
+import { useAuth } from "../context/AuthContext";
+import { Loader } from "../components/atoms/Loader/Loader";
 
 const MainLayout = () => {
   const location = useLocation();
@@ -22,6 +20,9 @@ const MainLayout = () => {
   const currentUserFromSession = JSON.parse(
     sessionStorage.getItem("currentUser") || "null"
   );
+  const { isLoading } = useAuth();
+
+  if (isLoading) return <Loader />;
 
   return (
     <>

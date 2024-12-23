@@ -4,6 +4,8 @@ import { GridRowToggler } from "../../layouts/GridRowToggler/GridRowToggler";
 import { useState } from "react";
 import { AddRessBookTableHead } from "../templates/AddressBook/AddressBookTableHead";
 import { EmployeeCard } from "../templates/AddressBook/EmployeeCard";
+import { useUsers } from "../../context/UsersContext";
+import { Loader } from "../atoms/Loader/Loader";
 
 interface IEmployeeListSectionProps {
   users: IUser[];
@@ -11,6 +13,7 @@ interface IEmployeeListSectionProps {
 
 export const EmployeeListSection = ({ users }: IEmployeeListSectionProps) => {
   const layoutToggler = localStorage.getItem("layoutToggler");
+  const { usersAreLoading } = useUsers();
 
   const navigate = useNavigate();
 
@@ -19,6 +22,10 @@ export const EmployeeListSection = ({ users }: IEmployeeListSectionProps) => {
   };
 
   const [isGrid, setIsGrid] = useState(layoutToggler);
+
+  if (usersAreLoading) {
+    return <Loader />
+  }
 
   return (
     <div className={`employee-list ${isGrid}`}>
@@ -36,11 +43,7 @@ export const EmployeeListSection = ({ users }: IEmployeeListSectionProps) => {
       {isGrid !== "_grid" && <AddRessBookTableHead />}
 
       {users.map((user) => (
-        <EmployeeCard
-          key={user.id}
-          user={user}
-          handleOnClick={handleOnClick}
-        />
+        <EmployeeCard key={user.id} user={user} handleOnClick={handleOnClick} />
       ))}
     </div>
   );

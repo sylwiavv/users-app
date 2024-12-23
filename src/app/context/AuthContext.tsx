@@ -1,15 +1,16 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { IUser } from "../types/users";
 import { useUser } from "../../server-actions/hooks/useUser";
-import { ISigInUser } from "../types/users"
+import { ISigInUser } from "../types/users";
 
 export interface ICurrentUser extends IUser, ISigInUser {
-  currentUser: IUser & ISigInUser
+  currentUser: IUser & ISigInUser;
 }
 
 interface AuthContextProps {
   currentUser: Partial<ICurrentUser>;
-  isAuthenticatedUser: ISigInUser | {isAuthenticated: boolean};
+  isAuthenticatedUser: ISigInUser | { isAuthenticated: boolean };
+  isLoading: boolean; 
   login: (user: Partial<ICurrentUser>) => void;
   logout: () => void;
 }
@@ -25,28 +26,32 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const { getUserInfo } = useUser();
   const [currentUser, setCurrentUser] = useState<Partial<ICurrentUser>>({});
-  const [isAuthenticatedUser, setIsAuthenticatedUser] = useState<ISigInUser | {isAuthenticated: boolean}>(currentUserFromSession);
+  const [isAuthenticatedUser, setIsAuthenticatedUser] = useState<ISigInUser | { isAuthenticated: boolean }>(currentUserFromSession);
+  const [isLoading, setIsLoading] = useState<boolean>(false); 
 
   const fetchUsers = async () => {
+    setIsLoading(true);
     try {
       if (currentUserFromSession?.id) {
         const currentUserData = await getUserInfo(currentUserFromSession.id);
 
         if (currentUserData) {
-          const {user_avatar, manager, role, first_name, last_name} = currentUserData
+          const { user_avatar, manager, role, first_name, last_name } = currentUserData;
           setCurrentUser({ user_avatar, manager, role, first_name, last_name, ...currentUserFromSession });
         }
       }
     } catch (error) {
       // TODO: Snackbar with error
       console.error("Error fetching user data:", error);
-      setIsAuthenticatedUser({isAuthenticated: false})
+      setIsAuthenticatedUser({ isAuthenticated: false });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     fetchUsers();
-  }, [currentUser?.id]);
+  }, []);
 
   const login = (user: Partial<ICurrentUser>) => {
     setCurrentUser(user);
@@ -54,13 +59,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const logout = () => {
-    setCurrentUser({id: "unlogg"});
-    setIsAuthenticatedUser({isAuthenticated: false})
+    setCurrentUser({ id: "unlogg" });
+    setIsAuthenticatedUser({ isAuthenticated: false });
     sessionStorage.removeItem("currentUser");
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout, isAuthenticatedUser }}>
+    <AuthContext.Provider value={{ currentUser, login, logout, isAuthenticatedUser, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

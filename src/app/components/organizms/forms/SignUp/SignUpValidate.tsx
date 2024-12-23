@@ -1,5 +1,7 @@
+import { IVisa } from "../../../../types/users";
+
 export const SignUpValidate = (
-  value: string | number | boolean,
+  value: string | number | boolean | IVisa[],
   name: string,
   errors: Record<string, string>
 ): Record<string, string> => {  
@@ -14,11 +16,16 @@ export const SignUpValidate = (
     first_native_name: "First native name",
     last_native_name: "Last native name",
     middle_native_name: "Middle native name",
-    manager_id: "Manger"
+    manager_id: "Manger",
+    user_avatar: "User avatar"
   };
 
   const readableName = names[name] || name; 
   const newErrors = { ...errors };
+
+  if (typeof value === "object" && value.length === 0) {
+    newErrors[name] = `${readableName} is required`;
+  }
 
   if (value === 0) {
     newErrors[name] = `${readableName} is required`;

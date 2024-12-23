@@ -13,7 +13,7 @@ export const SearchUserForm = () => {
 
   const handleOnSubmit = () => {
     const filtered = useSearchUser({
-      query: formValues.searchQuery,
+      query: formValues.searchQuery as string,
       data: users,
     });
 
@@ -28,13 +28,14 @@ export const SearchUserForm = () => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Backspace") {
       const filtered = useSearchUser({
-        query: formValues.searchQuery,
+        query: formValues.searchQuery as string,
         data: users,
       });
 
       setFilteredUsers(filtered);
     }
   };
+
 
   return (
     <form id="searchForm" onSubmit={handleSubmit}>

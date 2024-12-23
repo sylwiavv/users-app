@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
+import { VercelRequest, VercelResponse } from "@vercel/node";
 const prisma = new PrismaClient()
 
-exports.createManager = async (req, res) => {
+exports.createManager = async (req: VercelRequest, res: VercelResponse) => {
     try {
       const managerData = req.body;  
       const manager = await prisma.manager.create({
@@ -14,11 +15,11 @@ exports.createManager = async (req, res) => {
     }
   };
 
-  exports.getManagers = async (req, res) => {
+  exports.getManagers = async (req: VercelRequest, res: VercelResponse) => {
     try {
         const managers = await prisma.manager.findMany()
         return res.status(200).json({data: managers})
     } catch (error) {
-        return res.status(500).json({ error: error.message }) 
+        return res.status(500).json({ error: { status: 500, message: 'Internal Server Error' }})
     }
 }

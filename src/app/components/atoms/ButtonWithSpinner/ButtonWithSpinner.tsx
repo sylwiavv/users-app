@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import React from "react";
 
 
 interface ButtonWithSpinnerProps {

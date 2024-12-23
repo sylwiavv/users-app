@@ -1,8 +1,9 @@
-import { useState,  } from "react";
+import { useState } from "react";
+import { EUserRole, IVisa } from "../types/users";
 
 export type TFormValues = Record<string, TFormInputValue>;
 
-export type TFormInputValue = string;
+export type TFormInputValue = string | IVisa[] | EUserRole | number | boolean;
 
 export type TValidateFn = (
   value: string,
@@ -22,29 +23,48 @@ export const useForm = (
 
   const handleSubmit = (e: React.FormEvent) => {
     if (e) e.preventDefault();
-
+  
     let newErrors = { ...errors };
-      for (const fieldName in formValues) {
-        if (validate) {
-          newErrors = validate(formValues[fieldName], fieldName, newErrors);
-        }
-    }
+  
+    for (const fieldName in formValues) {
+      const value = formValues[fieldName];
 
-    if (Object.keys(newErrors).length === 0) submit();
-    else setError(newErrors);
+      console.log(value)
+  
+      const valueAsStringOrNumberOrBoolean =
+        typeof value === "boolean"
+          ? value
+          : typeof value === "number"
+          ? value
+          : Array.isArray(value)
+          ? JSON.stringify(value)
+          : String(value);
+  
+      if (validate) {
+        newErrors = validate(String(valueAsStringOrNumberOrBoolean), fieldName, newErrors);
+      }
+    }
+  
+    if (Object.keys(newErrors).length === 0) {
+      submit();
+    } else {
+      setError(newErrors);
+    }
   };
 
   const handleInputBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (validate) {
-      setError(validate(value, name, errors));
+      const valueAsString = Array.isArray(value) ? JSON.stringify(value) : value;
+      setError(validate(valueAsString, name, errors));
     }
   };
 
   const handleSelectInputBlur: React.FocusEventHandler<HTMLSelectElement> = (e) => {
     const { name, value } = e.target;
     if (validate) {
-      setError(validate(value, name, errors));
+      const valueAsString = Array.isArray(value) ? JSON.stringify(value) : value;
+      setError(validate(valueAsString, name, errors));
     }
   };
 
@@ -55,32 +75,22 @@ export const useForm = (
 
     if (type === "checkbox") {
       const checked = (e.target as HTMLInputElement).checked;
-
-      console.log(checked)
-
-      // setFormValues(() => ({
-      //   ...formValues,
-      //   [name]: checked,
-      // }));
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        [name]: checked,
+      }));
+    } else {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        [name]: type === "number" ? Number(value) : value,
+      }));
     }
-   else {
-    setFormValues(() => ({
-      ...formValues,
-      [name]: value,
-    }));
-   }
 
     setError((prevErrors) => {
       const newErrors = { ...prevErrors };
       delete newErrors[name];
       return newErrors;
     });
-
-    // setFormValues({
-    // ...formValues,
-    // [name]: value,
-    // });
-
   };
 
   return {

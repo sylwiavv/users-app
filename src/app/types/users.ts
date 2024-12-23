@@ -7,8 +7,8 @@ export interface IManager {
 export interface IVisa {
     issuing_country: string;
     type: string;
-    start_date: number;
-    end_date: number;
+    start_date: Date | string;
+    end_date: Date | string;
 }
 
 export interface IDateOfBirth {
@@ -17,7 +17,7 @@ export interface IDateOfBirth {
     day: number;
 }
 
-export enum EUserRole { EMPLOYEE = "employee", ADMIN = "admin", HR = "hr" }
+export enum EUserRole { EMPLOYEE = "EMPLOYEE", ADMIN = "ADMIN", HR = "HR" }
 
 export interface IUser {
     id: string;

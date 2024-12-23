@@ -10,7 +10,7 @@ async function signInUser(req: VercelRequest, res: VercelResponse) {
     const { email, password } = req.body;
 
     try {
-      const existingUser = await prisma.signInUser.findUnique({
+      const existingUser = await prisma.user.findUnique({
         where: {
           email: email,
         },

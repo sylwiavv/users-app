@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useManager } from "../../../../../server-actions/hooks/useManager";
-import { EUserRole, IManager } from "../../../../types/users";
+import { EUserRole, IManager, IVisa } from "../../../../types/users";
 import { useForm } from "../../../../hooks/useForm";
 import { useCreateIUniqued } from "../../../../hooks/useCreateIUniqued";
 import { FormButtons } from "../../../atoms/FormButtons";
@@ -21,18 +21,27 @@ import {
 import DatePickerComponent from "../test";
 import { formatDate } from "../../../../utils/helpers";
 import NumberField from "../../../atoms/NumberField/NumberField";
-import SelectField from "../../../atoms/SelectField/SelectField";
-import { Loader } from "../../../atoms/Loader/Loader";
+import {
+  ContactInfoSection,
+  PersonalInfoSection,
+  GeneralInfoSection,
+} from "./SignUpFormSections";
+import { useNavigate } from "react-router-dom";
+
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { getManagers } = useManager();
-  const { createUser, generateSignUser } = useUser();
-  const { generateId } = useCreateIUniqued();
-  const { generateBcryptHash } = useBcrypt();
+  const { createUser } = useUser();
+  // const { generateId } = useCreateIUniqued();
+  // const { generateBcryptHash } = useBcrypt();
 
   const [managers, setManagers] = useState<IManager[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [visaList, setVisaList] = useState<IVisa[]>([]);
 
+  const [birthtDate, setBirthtDate] = useState(new Date());
 
   useEffect(() => {
     (async () => {
@@ -47,9 +56,7 @@ const SignUpForm = () => {
     })();
   }, []);
 
-  //   const defaultValues: INewCreatedUser = {
   const defaultValues = {
-    id: "",
     first_name: "",
     last_name: "",
     department: "",
@@ -60,76 +67,44 @@ const SignUpForm = () => {
     skype: "",
     cnumber: "",
     citizenship: "",
-    // manager:{ id: "", first_name: "", last_name: "" },
     manager_id: "",
-
     isRemoteWork: "false",
     email: "",
     password: "",
-    role: EUserRole.EMPLOYEE,
-    user_avatar: "/assets/avatars/default-avatar.png",
+    user_avatar: "",
     first_native_name: "",
     last_native_name: "",
     middle_native_name: "",
     date_birth: "",
-    visa: "",
+    visa: visaList,
   };
 
-  const [startDate, setStartDate] = useState(new Date());
-
   const handleOnSubmit = async () => {
+    setIsLoading(true);
     if (Object.keys(errors).length > 0) {
       return;
     }
 
-    const id = generateId();
-    const formattedDate = formatDate(startDate);
+    const formattedDate = formatDate(birthtDate);
 
-    try {
-      if (!formValues.password) {
-        return;
-      }
+    const newUser = {
+      ...formValues,
+      date_birth: formattedDate,
+      visa: visaList,
+    } as INewCreatedUser;
 
-      const hashedPassword = await generateBcryptHash(
-        formValues.password as string,
-        10
-      );
-
-      const newUser = {
-        ...formValues,
-        date_birth: formattedDate,
-        role: EUserRole.EMPLOYEE,
-        password: hashedPassword,
-        id,
-      } as INewCreatedUser;
-
-      const response = await createUser(newUser);
-
-      if (response?.status === 201) {
-        if (hashedPassword) {
-          const data = {
-            id,
-            email: formValues.email as string,
-            password: hashedPassword,
-          };
-
-          const generateUser = await generateSignUser(data);
-
-          if (generateUser?.status === 201) {
-            enqueueSnackbar("User successfully created!", {
-              variant: ESnackbarTypes.SUCCESS,
-            });
-          }
-        } else {
-          enqueueSnackbar("Password is wrong, user was not created", {
-            variant: ESnackbarTypes.ERROR,
-          });
-        }
-      }
-    } catch (err) {
-      enqueueSnackbar("Password is wrong", {
+    const response = await createUser(newUser);
+    if (response.status === 201) {
+      enqueueSnackbar("User successfully created!", {
+        variant: ESnackbarTypes.SUCCESS,
+      });
+      navigate("/signin");
+      setIsLoading(false);
+    } else {
+      enqueueSnackbar(response.error.message, {
         variant: ESnackbarTypes.ERROR,
       });
+      setIsLoading(false);
     }
   };
 
@@ -149,135 +124,60 @@ const SignUpForm = () => {
     handleInputChange(event);
   };
 
+  const handleVisaChange = (
+    index: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = event.target;
+    const updatedVisaList = [...visaList];
+    updatedVisaList[index] = { ...updatedVisaList[index], [name]: value };
+    setVisaList(updatedVisaList);
+  };
+
+  const addVisa = () => {
+    setVisaList([
+      ...visaList,
+      {
+        issuing_country: "",
+        type: "",
+        start_date: new Date(),
+        end_date: new Date(),
+      },
+    ]);
+  };
+
+  const removeVisa = (index: number) => {
+    const updatedVisaList = visaList.filter((_, i) => i !== index);
+    setVisaList(updatedVisaList);
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit} className="register-form">
-        <div className="form-section">
-          <h3 className="form-section__title">Personal info</h3>
-          <div className="form">
-            <div className="row">
-              <FormField
-                error={errors.first_name}
-                label="First Name"
-                name="first_name"
-                id="first_name"
-                value={formValues.first_name}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-              />
+        <PersonalInfoSection
+          errors={errors}
+          formValues={formValues}
+          handleInputBlur={handleInputBlur}
+          handleInputChange={handleInputChange}
+        />
 
-              <FormField
-                error={errors.last_name}
-                label="Last Name"
-                name="last_name"
-                id="last_name"
-                value={formValues.last_name}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-              />
-            </div>
-          </div>
-        </div>
+        <GeneralInfoSection
+          errors={errors}
+          formValues={formValues}
+          handleInputBlur={handleInputBlur}
+          handleInputChange={handleInputChange}
+          birthtDate={birthtDate}
+          setBirthDay={setBirthtDate}
+          handleSelectInputBlur={handleSelectInputBlur}
+          managers={managers}
+        />
 
-        <div className="form-section">
-          <h3 className="form-section__title">General info</h3>
-          <div className="form-section__inputs-wrapper">
-            <div className="row">
-              <FormField
-                error={errors.department}
-                label="Department"
-                name="department"
-                id="department"
-                value={formValues.department}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-              />
-              <FormField
-                error={errors.building}
-                label="Building"
-                name="building"
-                id="building"
-                type="number"
-                value={formValues.building}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-              />
-              <NumberField
-                id="room"
-                name="room"
-                value={Number(formValues.room)}
-                label="Room"
-                error={errors.room}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-              />
-
-              <NumberField
-                name="desk_number"
-                id="desk_number"
-                value={Number(formValues.desk_number)}
-                label="Desk Number"
-                error={errors.desk_number}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-              />
-            </div>
-            <div className="row">
-              <DatePickerComponent
-                startDate={startDate}
-                setStartDate={setStartDate}
-              />
-            </div>
-            <SelectField
-              id="manager_id"
-              name="manager_id"
-              value={formValues.manager_id}
-              error={errors.manager_id}
-              onChange={handleInputChange}
-              onBlur={handleSelectInputBlur}
-              label="Manager"
-              placeholder="Select a Manager"
-              children={managers}
-            />
-          </div>
-        </div>
-
-        <div className="form-section">
-          <h3 className="form-section__title">Contact info</h3>
-          <div className="form">
-            <div className="row">
-              <FormField
-                error={errors.phone}
-                label="Phone"
-                name="phone"
-                id="phone"
-                value={formValues.phone}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-              />
-
-              <FormField
-                error={errors.skype}
-                label="Skype"
-                name="skype"
-                id="shype"
-                value={formValues.skype}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-              />
-
-              <FormField
-                error={errors.cnumber}
-                label="C-Number"
-                name="cnumber"
-                id="cnumber"
-                value={formValues.cnumber}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-              />
-            </div>
-          </div>
-        </div>
+        <ContactInfoSection
+          errors={errors}
+          formValues={formValues}
+          handleInputBlur={handleInputBlur}
+          handleInputChange={handleInputChange}
+        />
 
         <div className="form-section">
           <h3 className="form-section__title">Travel info</h3>
@@ -302,6 +202,80 @@ const SignUpForm = () => {
               onChange={handleCheckboxChange}
               // onBlur={handleInputBlur}
             />
+
+            <div className="form-section">
+              <h3 className="form-section__title">Visa Information</h3>
+              <div className="form">
+                {visaList.map((visa, index) => (
+                  <div key={index} className="visa-entry">
+                    <div className="row">
+                      <FormField
+                        error={""}
+                        label="Issuing Country"
+                        name="issuing_country"
+                        value={visa.issuing_country}
+                        onChange={(e) => handleVisaChange(index, e)}
+                      />
+                      <FormField
+                        error={""}
+                        label="Visa Type"
+                        name="type"
+                        value={visa.type}
+                        onChange={(e) => handleVisaChange(index, e)}
+                      />
+                    </div>
+                    <div className="row">
+                      {/* <DatePickerComponent
+                        startDate={visa.start_date as Date}
+                        setStartDate={setVisaEndDate}
+                      />
+                      <DatePickerComponent
+                        startDate={visaEndDate}
+                        setStartDate={setVisaEndDate}
+                      /> */}
+                      <div>
+                        <label>Start Date</label>
+                        <DatePickerComponent
+                          startDate={visa.start_date as Date}
+                          setStartDate={(date) => {
+                            const updatedVisaList = [...visaList];
+                            updatedVisaList[index] = {
+                              ...updatedVisaList[index],
+                              start_date: date as Date,
+                            };
+                            setVisaList(updatedVisaList);
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label>End Date</label>
+                        <DatePickerComponent
+                          startDate={visa.end_date as Date}
+                          setStartDate={(date) => {
+                            const updatedVisaList = [...visaList];
+                            updatedVisaList[index] = {
+                              ...updatedVisaList[index],
+                              end_date: date as Date,
+                            };
+                            setVisaList(updatedVisaList);
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="remove-visa-button"
+                      onClick={() => removeVisa(index)}
+                    >
+                      Remove Visa
+                    </button>
+                  </div>
+                ))}
+                <button type="button" onClick={addVisa}>
+                  Add Visa
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -371,7 +345,7 @@ const SignUpForm = () => {
         </div>
 
         <FormButtons
-          isLoading={false}
+          isLoading={isLoading}
           type="submit"
           onClose={() => console.log("Cancel registration")}
           onSend={handleOnSubmit}

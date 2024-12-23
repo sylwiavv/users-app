@@ -1,15 +1,16 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const bcrypt = require('bcryptjs');
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
 // -------------------------------
   // SignIn User
   // -------------------------------
-  exports.createSignInUser = async (req, res) => {
+  exports.createSignInUser = async (req: VercelRequest, res: VercelResponse) => {
     try {
       const { email, password } = req.body;
   
-      const existingUser = await prisma.signInUser.findUnique({
+      const existingUser = await prisma.user.findUnique({
         where: {
           email: email,
         },

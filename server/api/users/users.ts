@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import { allowCors } from './utils/allowCors';
+import { allowCors } from './../utils/allowCors';
 const prisma = new PrismaClient();
+
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
 async function getAllUsers(req: VercelRequest, res: VercelResponse) {

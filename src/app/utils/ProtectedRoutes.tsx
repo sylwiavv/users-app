@@ -1,17 +1,18 @@
 import { Outlet, Navigate } from "react-router-dom";
-import { useAuth,  } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { UsersProvider } from "../context/UsersContext";
 import { useUser } from "./../../server-actions/hooks/useUser";
 
 const PrivateRoutes = () => {
-  const currentUserFromSession = JSON.parse(sessionStorage.getItem("currentUser") || "null");
+  const currentUserFromSession = JSON.parse(
+    sessionStorage.getItem("currentUser") || "null"
+  );
   const { getUsers } = useUser();
 
   return currentUserFromSession?.isAuthenticated ? (
-        <UsersProvider getUsers={getUsers}>
-    
+    <UsersProvider getUsers={getUsers}>
       <Outlet />
-      </UsersProvider>
+    </UsersProvider>
   ) : (
     <Navigate to="/signin" />
   );

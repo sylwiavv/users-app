@@ -78,8 +78,8 @@ export const SignInForm = () => {
 
   const handleOnSubmit = () => {
     const formData = {
-      email: formValues.email,
-      password: formValues.password,
+      email: formValues.email as string,
+      password: formValues.password as string,
     };
 
     signIn(formData);

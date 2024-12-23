@@ -2,14 +2,11 @@ import { useState, FormEvent, useEffect } from "react";
 import { useUsers } from "../context/UsersContext";
 import { SettingsTableRow } from "../components/Settings/SettingsTableRow";
 import { MagnifyingGlassIcon } from "../../assets/icons/icons";
-import FormField from "../components/atoms/FormField/FormField";
 import { IconFormField } from "../components/atoms/IconFormField/IconFormField";
-import { GridLayout } from "../layouts/GridLayout";
 import { useSearchUser } from "../../server-actions/hooks/useSearchUser";
 
 const SettingsPage = () => {
   const { filteredUsers, refreshUsers, users, setFilteredUsers } = useUsers();
-
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
@@ -43,10 +40,7 @@ const SettingsPage = () => {
     (async () => {
    await refreshUsers()
     })()
-
   },[])
-
-  console.log(searchQuery);
 
   return (
     <>
@@ -67,13 +61,6 @@ const SettingsPage = () => {
                 icon={<MagnifyingGlassIcon />}
               />
 
-              {/* <button
-                  type="submit"
-                  id="searchButtonSettingsPage"
-                  className="blue-button"
-                >
-                  Search
-                </button> */}
             </form>
           </div>
           <div className="address-book__header__role item">

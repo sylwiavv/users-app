@@ -34,7 +34,6 @@ export const GeneralForm =  ({closeModal}: {closeModal: () => void}) => {
     (async () => {
       try {
         const response = await updateUser({ id, data: formValues });
-
         if (response?.status === 200) {
           const updatedData = await response?.json();
           setUserDetails(updatedData);

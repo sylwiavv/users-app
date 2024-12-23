@@ -1,40 +1,49 @@
-import { IUser } from "../types/users";
+import { EUserRole, IUser } from "../types/users";
 import { ICurrentUser, useAuth } from "../context/AuthContext";
+import { useEffect, useState } from "react";
 
 export const useUserRole = ({ userFromPageDetails }: { userFromPageDetails: ICurrentUser | IUser | Partial<ICurrentUser> | null }) => {
-  const { currentUser } = useAuth();
-
   const idFromPage = userFromPageDetails?.id;
-  const isAdmin = currentUser?.role === "admin" || false;
-  const isEmployee = currentUser?.role === "employee" || false;
+
+  const { currentUser, isLoading  } = useAuth();
+  const [userCanEdit, setUserCanEdit] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [isUserManager, setIsUserManager] = useState(false)
+
+  useEffect(() => {
+  const isAdmin = currentUser?.role?.toUpperCase() === EUserRole.ADMIN.toUpperCase();
+  const isEmployee = currentUser?.role?.toUpperCase() === EUserRole.EMPLOYEE.toUpperCase();
   const isCurrentLoggedInUser = currentUser?.id === idFromPage?.trim().toLowerCase();
   const isSameManagerId = currentUser?.id === userFromPageDetails?.manager?.id;
-  const isManagerRole = currentUser?.role === "hr";
+  const isManagerRole = currentUser?.role?.toUpperCase() === EUserRole.HR.toUpperCase();
   const isUserManager = isManagerRole && isSameManagerId;
 
-  let userCanEdit = false;
+  setIsUserManager(isUserManager)
+  setIsAdmin(isAdmin)
+  
+    switch (true) {
+      case isCurrentLoggedInUser && isAdmin:
+        setUserCanEdit(false)
+        break;
+  
+      case isAdmin:
+        setUserCanEdit(true)
+        break;
+  
+      case isEmployee:
+        setUserCanEdit(false)
+        break;
+  
+      case isUserManager:
+        setUserCanEdit(true)
+        break;
+  
+      default:
+        setUserCanEdit(false)
+        break;
+    }
+  }, [isLoading, idFromPage])
 
-  switch (true) {
-    case isCurrentLoggedInUser && isAdmin:
-      userCanEdit = false;
-      break;
-
-    case isAdmin:
-      userCanEdit = true;
-      break;
-
-    case isEmployee:
-      userCanEdit = false;
-      break;
-
-    case isUserManager:
-      userCanEdit = true;
-      break;
-
-    default:
-      userCanEdit = false;
-      break;
-  }
 
   return { isAdmin, isUserManager, userCanEdit };
 };

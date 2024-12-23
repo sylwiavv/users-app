@@ -1,9 +1,7 @@
-import { IUser } from "../../../types/users";
+import { IUser } from "../../types/users";
 
 export const EditUserRole = ({ user }: { user: IUser }) => {
   const { first_name, last_name, role } = user;
-
-
 
   return (
     <div className="user-edit-role">
@@ -18,7 +16,6 @@ export const EditUserRole = ({ user }: { user: IUser }) => {
         </p>
         <p>Current role is {role}</p>
       </div>
-
     </div>
   );
 };

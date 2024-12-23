@@ -11,14 +11,17 @@ import { UsersDetailsPersonal } from "../components/UserDetails/UserDetailsPerso
 import { GridLayout } from "../layouts/GridLayout";
 import { useUserRole } from "../hooks/useUserRole";
 import {useUserDetails} from "../context/UserDetailsContext";
+import { useAuth } from "../context/AuthContext";
 
 import { UserDetailsProvider } from "../context/UserDetailsContext";
+import { Loader } from "../components/atoms/Loader/Loader";
 
 const UserDetailsPage = () => {
   const { id } = useParams<Pick<IUser, "id">>();
   const { getUserInfo } = useUser();
   const { userDetails, setUserDetails } = useUserDetails();
   const { userCanEdit } = useUserRole({ userFromPageDetails: userDetails });
+  const { isLoading } = useAuth();
 
   useEffect(() => {
     if (!id) return;
@@ -32,9 +35,9 @@ const UserDetailsPage = () => {
       }
     };
     fetchUserDetails();
-  }, [id, getUserInfo, setUserDetails]);
+  }, [id]);
 
-  if (!userDetails) return;
+  if (!userDetails || isLoading) return <Loader />
 
   return (
     <GridLayout>

@@ -1,7 +1,7 @@
-import { IUser } from "../../types/users";
-import { Modal } from "../atoms/Modal/Modal"
+import { EUserRole, IUser } from "../../types/users";
+import { Modal } from "../atoms/Modal/Modal";
 import { useState } from "react";
-import { EditUserRole } from "../../components/organizms/Settings/EditUserRole";
+import { EditUserRole } from "./EditUserRole";
 import { FormButtons } from "../atoms/FormButtons";
 import { useForm } from "../../hooks/useForm";
 import { useUser } from "../../../server-actions/hooks/useUser";
@@ -12,8 +12,11 @@ export const SettingsTableRow = ({ user }: { user: IUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { refreshUsers } = useUsers();
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<{error: boolean, message: string}>({error: false, message: ""})
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<{ error: boolean; message: string }>({
+    error: false,
+    message: "",
+  });
 
   const {
     id,
@@ -29,45 +32,39 @@ export const SettingsTableRow = ({ user }: { user: IUser }) => {
     role: "",
   };
 
-
   const handleOnSubmit = () => {
-    if (formValues.role === ""){
-      setError({error: true, message: "You have to choose role"})
-      return
+    if (formValues.role === "") {
+      setError({ error: true, message: "You have to choose role" });
+      return;
     }
     (async () => {
-
-      setIsLoading(true)
+      setIsLoading(true);
 
       try {
         const update = await updateUser({ id, data: formValues });
-    
+
         if (update?.status === 200) {
           await refreshUsers();
-          setIsLoading(false)
+          setIsLoading(false);
 
-          setError({error: false, message: ""})
-          setIsOpen(false)
+          setError({ error: false, message: "" });
+          setIsOpen(false);
         }
-  
       } catch (error) {
         console.error("Error updating user role:", error);
-    
-        setIsLoading(false)
+
+        setIsLoading(false);
       }
     })();
-    
   };
 
   const { formValues, handleInputChange, handleSubmit } = useForm(
     defaultValues,
-    handleOnSubmit,
+    handleOnSubmit
   );
 
   return (
-    
     <li className="address-book__content__user">
-
       <div className="address-book__content__user__personal">
         <img
           className="address-book__content__user__personal__photo"
@@ -85,17 +82,25 @@ export const SettingsTableRow = ({ user }: { user: IUser }) => {
       </div>
       <div className="address-book__content__user__role">
         <button
-          disabled={role === "employee" || role === "admin"}
+          disabled={
+            role.toUpperCase() === EUserRole.EMPLOYEE ||
+            role.toUpperCase() === EUserRole.ADMIN
+          }
           className={`sharp-button ${
-            role === "hr" ? "sharp-button--disabled" : ""
+            role.toUpperCase() === EUserRole.HR ? "sharp-button--disabled" : ""
           }`}
         >
           HR
         </button>
         <button
-          disabled={role === "hr" || role === "admin"}
+          disabled={
+            role.toUpperCase() === EUserRole.HR ||
+            role.toUpperCase() === EUserRole.ADMIN
+          }
           className={`sharp-button ${
-            role === "employee" ? "sharp-button--disabled" : ""
+            role.toUpperCase() === EUserRole.EMPLOYEE
+              ? "sharp-button--disabled"
+              : ""
           }`}
         >
           EMPLOYEE
@@ -103,9 +108,9 @@ export const SettingsTableRow = ({ user }: { user: IUser }) => {
       </div>
 
       <button
-        disabled={role !== "admin"}
+        disabled={role.toUpperCase() !== EUserRole.ADMIN}
         className={`sharp-button ${
-          role === "admin" ? "sharp-button--disabled" : ""
+          role.toUpperCase() === EUserRole.ADMIN ? "sharp-button--disabled" : ""
         }`}
       >
         ADMIN
@@ -126,17 +131,23 @@ export const SettingsTableRow = ({ user }: { user: IUser }) => {
           <select
             name="role"
             id="role-select"
-            value={formValues.role}
+            value={formValues.role as EUserRole}
             onChange={handleInputChange}
           >
             <option value="">--Choose role--</option>
-            <option value="admin">Admin</option>
-            <option value="employee">Employee</option>
-            <option value="hr">HR</option>
+            <option value={`${EUserRole.ADMIN}`}>Admin</option>
+            <option value={`${EUserRole.EMPLOYEE}`}>Employee</option>
+            <option value={`${EUserRole.HR}`}>HR</option>
           </select>
         </form>
-        {error && <p className="input-label__wrapper__error">{error.message}</p>}
-        <FormButtons onClose={() => setIsOpen(false)} onSend={handleOnSubmit} isLoading={isLoading} />
+        {error && (
+          <p className="input-label__wrapper__error">{error.message}</p>
+        )}
+        <FormButtons
+          onClose={() => setIsOpen(false)}
+          onSend={handleOnSubmit}
+          isLoading={isLoading}
+        />
       </Modal>
     </li>
   );
