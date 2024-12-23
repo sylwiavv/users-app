@@ -8,12 +8,12 @@ module.exports = {
   output: {
     path: path.join(__dirname, "./src/dist"),
     filename: "bundle.js",
-    publicPath: "/", // Ścieżka root dla zasobów
+    publicPath: "/",
   },
   devServer: {
     historyApiFallback: {
       rewrites: [
-        { from: /^\/user-details/, to: "/index.html" },
+        { from: /^\/user-details/, to: "src/public/index.html" },
       ],
     },
     static: path.join(__dirname, "./src/dist"),
@@ -21,7 +21,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "src/index.html",
+      template: "src/public/index.html",
       favicon: "src/assets/favicon.svg",
     }),
     new CopyPlugin({
@@ -63,10 +63,10 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        type: "asset/resource", // Nowoczesne podejście
+        type: "asset/resource",
         generator: {
           filename: "assets/[name][ext]",
-          publicPath: "/", // Poprawne ścieżki
+          publicPath: "/", 
         },
       },
     ],
