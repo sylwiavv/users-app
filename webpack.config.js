@@ -6,15 +6,15 @@ module.exports = {
   mode: "development",
   entry: "./src/index.tsx",
   output: {
-    path: path.join(__dirname, "dist"),
+    path: path.join(__dirname, "./src/dist"),
     filename: "bundle.js",
-    publicPath: "/", // Ścieżka root dla zasobów
+    publicPath: "/",
   },
   devServer: {
     historyApiFallback: {
-      rewrites: [{ from: /^\/user-details/, to: "src/public/index.html" }],
+      rewrites: [{ from: /^\/user-details/, to: "./src/public/index.html" }],
     },
-    static: path.join(__dirname, "./dist"),
+    static: path.join(__dirname, "./src/dist"),
     port: 8080,
   },
   plugins: [
