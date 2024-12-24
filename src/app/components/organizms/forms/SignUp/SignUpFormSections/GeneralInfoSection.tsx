@@ -3,8 +3,8 @@ import { IManager } from "../../../../../types/users";
 import FormField from "../../../../atoms/FormField/FormField";
 import NumberField from "../../../../atoms/NumberField/NumberField";
 import SelectField from "../../../../atoms/SelectField/SelectField";
-import DatePickerComponent from "../../test";
 import { ISignUpSectionProps } from "./PersonalInfoSection";
+import DatePickerComponent from "../../../../atoms/DatePickerComponent";
 
 interface IGeneralInfoSection extends ISignUpSectionProps {
   birthtDate: Date;

@@ -1,15 +1,13 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useManager } from "../../../../../server-actions/hooks/useManager";
-import { EUserRole, IManager, IVisa } from "../../../../types/users";
+import { IManager, IVisa } from "../../../../types/users";
 import { useForm } from "../../../../hooks/useForm";
-import { useCreateIUniqued } from "../../../../hooks/useCreateIUniqued";
 import { FormButtons } from "../../../atoms/FormButtons";
 import FormField from "../../../atoms/FormField/FormField";
 import {
   INewCreatedUser,
   useUser,
 } from "../../../../../server-actions/hooks/useUser";
-import { useBcrypt } from "../../../../../server-actions/hooks/useBcrypt";
 import { NavLink } from "react-router-dom";
 import CheckboxField from "../../../atoms/CheckboxField/CheckboxField";
 import { SignUpValidate } from "./SignUpValidate";
@@ -18,15 +16,14 @@ import {
   ESnackbarTypes,
 } from "../../../../context/SnackbarContex";
 
-import DatePickerComponent from "../test";
 import { formatDate } from "../../../../utils/helpers";
-import NumberField from "../../../atoms/NumberField/NumberField";
 import {
   ContactInfoSection,
   PersonalInfoSection,
   GeneralInfoSection,
 } from "./SignUpFormSections";
 import { useNavigate } from "react-router-dom";
+import DatePickerComponent from "../../../atoms/DatePickerComponent";
 
 
 const SignUpForm = () => {
@@ -34,8 +31,6 @@ const SignUpForm = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { getManagers } = useManager();
   const { createUser } = useUser();
-  // const { generateId } = useCreateIUniqued();
-  // const { generateBcryptHash } = useBcrypt();
 
   const [managers, setManagers] = useState<IManager[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -200,7 +195,6 @@ const SignUpForm = () => {
               checked={isChecked}
               error=""
               onChange={handleCheckboxChange}
-              // onBlur={handleInputBlur}
             />
 
             <div className="form-section">
@@ -225,14 +219,6 @@ const SignUpForm = () => {
                       />
                     </div>
                     <div className="row">
-                      {/* <DatePickerComponent
-                        startDate={visa.start_date as Date}
-                        setStartDate={setVisaEndDate}
-                      />
-                      <DatePickerComponent
-                        startDate={visaEndDate}
-                        setStartDate={setVisaEndDate}
-                      /> */}
                       <div>
                         <label>Start Date</label>
                         <DatePickerComponent

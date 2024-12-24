@@ -1,11 +1,11 @@
-import { IUser } from "../../types/users";
+import { IUser } from "../../../types/users";
 import { useNavigate } from "react-router-dom";
-import { GridRowToggler } from "../../layouts/GridRowToggler/GridRowToggler";
+import { GridRowToggler } from "../../../layouts/GridRowToggler/GridRowToggler";
 import { useState } from "react";
-import { AddRessBookTableHead } from "../templates/AddressBook/AddressBookTableHead";
-import { EmployeeCard } from "../templates/AddressBook/EmployeeCard";
-import { useUsers } from "../../context/UsersContext";
-import { Loader } from "../atoms/Loader/Loader";
+import { AddRessBookTableHead } from "./AddressBookTableHead";
+import { EmployeeCard } from "./EmployeeCard";
+import { useUsers } from "../../../context/UsersContext";
+import { Loader } from "../../atoms/Loader/Loader";
 
 interface IEmployeeListSectionProps {
   users: IUser[];

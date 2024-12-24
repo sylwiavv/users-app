@@ -1,7 +1,5 @@
 import { useState } from "react";
 import UserDetailsActions from "../UserDetailsActions";
-import { useAuth } from "../../../context/AuthContext"
-import { Loader } from "../../atoms/Loader/Loader";
 
 const UserDetailsButtonActions = ({
   userCanEdit,

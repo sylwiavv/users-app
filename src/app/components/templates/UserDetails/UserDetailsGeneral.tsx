@@ -1,12 +1,5 @@
-import { IUser } from "../../types/users";
-import {
-  BuildingIcon,
-  CalendarIcon,
-  DoorIcon,
-  HashIcon,
-  PersonIcon,
-  SuitcaseIcon,
-} from "../../../assets/icons/icons";
+import { SuitcaseIcon, BuildingIcon, DoorIcon, HashIcon, PersonIcon, CalendarIcon } from "../../../../assets/icons/icons";
+import { IUser } from "../../../types/users";
 
 const UserDetailsGeneral = ({ user }: { user: IUser }) => {
   const { department, building, room, desk_number, date_birth, manager } = user;

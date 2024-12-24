@@ -18,11 +18,6 @@ form {
   .row-50 {
     max-width: 50%;
   }
-
-  // &.row div label {
-  //   display: flex;
-  //   margin-bottom: calc(vars.$space-m + vars.$space-xs);
-  // }
 }
 
 input {
@@ -112,11 +107,13 @@ select {
     font-size: 0.8rem;
     font-weight: 600;
     text-transform: capitalize;
+    margin-bottom: vars.$space-xs;
   }
 
   .input-with-icon__input {
-    &:hover {
+    &:hover, &:focus-visible {
       border: none;
+      outline: unset;
     }
   }
 
@@ -163,7 +160,6 @@ select {
 }
 
 .form-section {
-  // background-color: #dee0e2;
   margin-bottom: vars.$space-m;
   &__title {
     color: vars.$dark-gray;
@@ -177,13 +173,9 @@ select {
   }
 
   &__inputs-wrapper {
-    background-color: lightblue;
     display: flex;
     align-self: center;
     flex-direction: column;
-  }
-
-  &.checkbox-field__wrapper {
   }
 }
 
@@ -191,4 +183,9 @@ select {
   display: flex;
   flex-direction: column;
   gap: vars.$space-xl;
+}
+
+.additional-info {
+  font-size: .8rem;
+  padding: vars.$space-s 0;
 }

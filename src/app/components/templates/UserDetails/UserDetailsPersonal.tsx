@@ -1,4 +1,4 @@
-import { IUser } from "../../types/users";
+import { IUser } from "../../../types/users";
 
 export const UsersDetailsPersonal = ({ user }: { user: IUser }) => {
   const {

@@ -1,6 +1,3 @@
-// import { TUserRole } from "../../types/userTypes";
-// import {currentLoggUser} from "../getCurrentUserDetails"
-
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import IconButton from "../components/atoms/IconButton/IconButton";
@@ -8,13 +5,8 @@ import { PowerIcon, QuestionmarkIcon } from "../../assets/icons/icons";
 import { HeaderNavigation } from "./HeaderNavigation/HeaderNavigation";
 import { useUserRole } from "../hooks/useUserRole";
 
-// const getNavSettingsTabs = document.querySelector("#main-header") as HTMLElement;
-
 export const Header = () => {
-  // const user = await currentLoggUser();
-  // const {user_avatar, first_name, last_name} = user
-  // const isCurrentUserAdmin = user.role === "admin";
-  const { currentUser } = useAuth();
+  const { currentUser, isLoading } = useAuth();
   const { isAdmin } = useUserRole({ userFromPageDetails: currentUser });
 
   const navigate = useNavigate();
@@ -53,17 +45,19 @@ export const Header = () => {
             className="support-btn rounded-button"
           />
 
-          <button
-            onClick={getCurrentUserInfo}
-            className="user-info rounded-button"
-          >
-            <div className="user-info_avatar-wrapper">
-              <img src={currentUser.user_avatar} alt="current user" />
-            </div>
-            <span className="user-name">
-              {currentUser.first_name} {currentUser.last_name}
-            </span>
-          </button>
+          {!isLoading && (
+            <button
+              onClick={getCurrentUserInfo}
+              className="user-info rounded-button"
+            >
+              <div className="user-info_avatar-wrapper">
+                <img src={currentUser.user_avatar} alt="current user" />
+              </div>
+              <span className="user-name">
+                {currentUser.first_name} {currentUser.last_name}
+              </span>
+            </button>
+          )}
 
           <IconButton
             icon={<PowerIcon />}

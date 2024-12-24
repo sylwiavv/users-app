@@ -1,11 +1,11 @@
-import { EUserRole, IUser } from "../../types/users";
-import { Modal } from "../atoms/Modal/Modal";
+import { EUserRole, IUser } from "../../../types/users";
+import { Modal } from "../../atoms/Modal/Modal";
 import { useState } from "react";
+import { FormButtons } from "../../atoms/FormButtons";
+import { useForm } from "../../../hooks/useForm";
+import { useUser } from "../../../../server-actions/hooks/useUser";
+import { useUsers } from "../../../context/UsersContext";
 import { EditUserRole } from "./EditUserRole";
-import { FormButtons } from "../atoms/FormButtons";
-import { useForm } from "../../hooks/useForm";
-import { useUser } from "../../../server-actions/hooks/useUser";
-import { useUsers } from "../../context/UsersContext";
 
 export const SettingsTableRow = ({ user }: { user: IUser }) => {
   const { updateUser } = useUser();
@@ -124,8 +124,6 @@ export const SettingsTableRow = ({ user }: { user: IUser }) => {
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <EditUserRole user={user} />
-        {/* <EditUserRoleForm onSubmit={handleOnSubmit} /> */}
-
         <form onSubmit={handleOnSubmit}>
           {/* TODO: prepare Field component for select inputns */}
           <select

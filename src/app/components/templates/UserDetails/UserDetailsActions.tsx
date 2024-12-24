@@ -3,13 +3,13 @@ import {
   PenIcon,
   CopyIcon,
   CircleExclamationIcon,
-} from "../../../assets/icons/icons";
-import IconButton from "../atoms/IconButton/IconButton";
-import { Modal } from "../atoms/Modal/Modal"
+} from "../../../../assets/icons/icons";
+import IconButton from "../../atoms/IconButton/IconButton";
 import { EDIT_OPTION, UserEditOptions } from "./UserEditOptions";
 import { PersonalForm } from "./EditForms/PersonalForm";
 import { ContactForm } from "./EditForms/ContactForm";
 import { GeneralForm } from "./EditForms/GeneralForm";
+import { Modal } from "../../atoms/Modal/Modal";
 
 interface IUserDetailsActionsProps {
   userCanEdit: boolean;

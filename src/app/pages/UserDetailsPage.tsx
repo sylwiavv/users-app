@@ -3,11 +3,7 @@ import { useParams } from "react-router-dom";
 import { useUser } from "../../server-actions/hooks/useUser";
 import { IUser } from "../types/users";
 import GoBackButton from "../components/atoms/GoBackButton/GoBackButton";
-import UserDetailsContacts from "../components/UserDetails/UserDetailsContacts";
-import UserDetailsTravel from "../components/UserDetails/UserDetailsTravel";
-import UserDetailsGeneral from "../components/UserDetails/UserDetailsGeneral";
-import UserDetailsButtonActions from "../components/UserDetails/actions/UserDetailsButtonActions";
-import { UsersDetailsPersonal } from "../components/UserDetails/UserDetailsPersonal";
+
 import { GridLayout } from "../layouts/GridLayout";
 import { useUserRole } from "../hooks/useUserRole";
 import {useUserDetails} from "../context/UserDetailsContext";
@@ -15,6 +11,11 @@ import { useAuth } from "../context/AuthContext";
 
 import { UserDetailsProvider } from "../context/UserDetailsContext";
 import { Loader } from "../components/atoms/Loader/Loader";
+import UserDetailsButtonActions from "../components/templates/UserDetails/actions/UserDetailsButtonActions";
+import UserDetailsContacts from "../components/templates/UserDetails/UserDetailsContacts";
+import UserDetailsGeneral from "../components/templates/UserDetails/UserDetailsGeneral";
+import { UsersDetailsPersonal } from "../components/templates/UserDetails/UserDetailsPersonal";
+import UserDetailsTravel from "../components/templates/UserDetails/UserDetailsTravel";
 
 const UserDetailsPage = () => {
   const { id } = useParams<Pick<IUser, "id">>();

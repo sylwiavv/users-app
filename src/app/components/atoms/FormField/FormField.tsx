@@ -13,6 +13,7 @@ export interface IFormFieldProps {
   placeholder?: string;
   onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  additionalInfo?: string
 }
 
 const FormField = React.forwardRef<HTMLInputElement, IFormFieldProps>(
@@ -29,6 +30,7 @@ const FormField = React.forwardRef<HTMLInputElement, IFormFieldProps>(
       onBlur,
       onKeyDown,
       placeholder,
+      additionalInfo,
       ...props
     },
     ref
@@ -51,6 +53,7 @@ const FormField = React.forwardRef<HTMLInputElement, IFormFieldProps>(
           onKeyDown={onKeyDown}
           {...props}
         />
+        {additionalInfo && <p className="additional-info">{additionalInfo}</p>}
         {error && <p className="input-label__wrapper__error">{error}</p>}
       </div>
     );

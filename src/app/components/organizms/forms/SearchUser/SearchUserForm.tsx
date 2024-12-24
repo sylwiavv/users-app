@@ -50,7 +50,6 @@ export const SearchUserForm = () => {
         onKeyDown={handleKeyDown}
         icon={<MagnifyingGlassIcon />}
       />
-      {/* <input type="text" id="searchInput" placeholder="Search by ID, Name..." /> */}
       <button type="submit" id="searchBtn" className="blue-button">
         Search
       </button>

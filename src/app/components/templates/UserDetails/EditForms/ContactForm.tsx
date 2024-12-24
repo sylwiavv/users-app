@@ -1,8 +1,8 @@
-import FormField from "../../atoms/FormField/FormField";
-import { useForm } from "../../../hooks/useForm";
-import { useUser } from "../../../../server-actions/hooks/useUser";
-import { FormButtons } from "../../atoms/FormButtons";
-import { useUserDetails } from "../../../context/UserDetailsContext";
+import FormField from "../../../atoms/FormField/FormField";
+import { useForm } from "../../../../hooks/useForm";
+import { useUser } from "../../../../../server-actions/hooks/useUser";
+import { FormButtons } from "../../../atoms/FormButtons";
+import { useUserDetails } from "../../../../context/UserDetailsContext";
 
 export const ContactForm = ({closeModal}: {closeModal: () => void}) => {
   const { userDetails, setUserDetails } = useUserDetails();
@@ -12,7 +12,6 @@ export const ContactForm = ({closeModal}: {closeModal: () => void}) => {
   if (!userDetails) return <p>Something went wrong, try again.</p>;
 
   const { id, phone, email, skype, cnumber } = userDetails;
-
 
   const defaultValues = {
     phone,

@@ -1,4 +1,4 @@
-import { IUser } from "../../types/users";
+import { IUser } from "../../../types/users";
 
 export const EditUserRole = ({ user }: { user: IUser }) => {
   const { first_name, last_name, role } = user;

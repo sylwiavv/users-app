@@ -1,8 +1,8 @@
-import FormField from "../../atoms/FormField/FormField";
-import { useForm } from "../../../hooks/useForm";
-import { useUser } from "../../../../server-actions/hooks/useUser";
-import { FormButtons } from "../../atoms/FormButtons";
-import { useUserDetails } from "../../../context/UserDetailsContext";
+import FormField from "../../../atoms/FormField/FormField";
+import { useForm } from "../../../../hooks/useForm";
+import { useUser } from "../../../../../server-actions/hooks/useUser";
+import { FormButtons } from "../../../atoms/FormButtons";
+import { useUserDetails } from "../../../../context/UserDetailsContext";
 
 export const PersonalForm = ({closeModal}: {closeModal: () => void}) => {
   const { userDetails, setUserDetails } = useUserDetails();

@@ -51,6 +51,7 @@ export const PersonalInfoSection = ({
             value={formValues.user_avatar}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
+            additionalInfo={"You cane use this link https://avatar.iran.liara.run/public"}
           />
         </div>
       </div>

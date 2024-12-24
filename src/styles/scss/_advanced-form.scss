@@ -1,6 +1,12 @@
 @use "../variables" as vars;
 
-form {
+.advanced-search-form {
+  &__fields {
+    display: flex;
+    gap: vars.$space-m;
+    flex-direction: column;
+  }
+
   input:focus, select:focus {
     border-color: vars.$light-blue;
     outline: none;
@@ -24,7 +30,6 @@ form {
   margin-top: vars.$space-s;
 }
 
-/* Mobile */
 @media (max-width: 400px) {
   .row {
     flex-direction: column;

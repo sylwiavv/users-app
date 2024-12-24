@@ -1,6 +1,6 @@
 import React from "react";
-import { IUser } from "../../types/users";
-import { AddressIcon, CalendarIcon, EarthIcon } from "../../../assets/icons/icons";
+import { IUser } from "../../../types/users";
+import { AddressIcon, CalendarIcon, EarthIcon } from "../../../../assets/icons/icons";
 
 const UserDetailsTravel = ({ user }: { user: IUser }) => {
   const { citizenship, visa } = user;

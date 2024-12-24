@@ -1,4 +1,3 @@
-import { ReactNode, useEffect, useState } from "react";
 import { Header } from "./Header";
 import { Routes, Route, useLocation, Navigate } from "react-router";
 import {

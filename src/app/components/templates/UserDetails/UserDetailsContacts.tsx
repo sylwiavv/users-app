@@ -1,5 +1,5 @@
-import { IUser } from "../../types/users";
-import { AtSymbolIcon, CIcon, MobileIcon, SkypeIcon } from "../../../assets/icons/icons";
+import { IUser } from "../../../types/users";
+import { AtSymbolIcon, CIcon, MobileIcon, SkypeIcon } from "../../../../assets/icons/icons";
 
 const UserDetailsContacts = ({ user }: { user: IUser }) => {
   const { phone, email, skype, cnumber } = user;

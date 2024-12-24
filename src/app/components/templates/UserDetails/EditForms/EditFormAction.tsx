@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { IUser } from "../../../types/users";
+import { IUser } from "../../../../types/users";
 
 type T = Record<string, any>;
 
@@ -29,7 +29,7 @@ export const useEditFormAction = ({
       try {
         await updateDataMethod({id, data});
       } catch (error) {
-        //error snackbar
+        //TODO: error snackbar
       }
     },
     [id, updateDataMethod, formValues]
