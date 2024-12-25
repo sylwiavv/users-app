@@ -18,7 +18,7 @@ app.use('/signin', require('./routes/signInUserRoute'))
 // ------------------------------
 
 app.use(cors({
-    origin: ["https://users-app-frontend-phi.vercel.app/"],
+    origin: ["https://users-app-frontend-phi.vercel.app"],
     methods: ["POST", "GET", "PATCH"]
   }));
 

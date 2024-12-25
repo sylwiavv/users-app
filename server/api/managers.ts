@@ -1,8 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { allowCors } from './utils/allowCors';
 
-export default async function getAllUsers(req: VercelRequest, res: VercelResponse) {
+async function getAllManagers(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'GET') {
     try {
       const allManagers = await prisma.manager.findMany();
@@ -16,3 +17,5 @@ export default async function getAllUsers(req: VercelRequest, res: VercelRespons
     return res.status(404).json({ error: { status: 405, message: 'Managers not found' } });
   }
 }
+
+export default allowCors(getAllManagers)
