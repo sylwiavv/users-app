@@ -19,8 +19,7 @@ app.use('/signin', require('./routes/signInUserRoute'))
 // ------------------------------
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-  res.header("Access-Control-Allow-Origin", "https://users-app-frontend-phi.vercel.app");
-  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
