@@ -1,13 +1,18 @@
+import GoBackButton from "../components/atoms/GoBackButton/GoBackButton";
 import { SignUpForm } from "../components/organizms/forms/SignUp/SignUpForm";
 
 const SignUpPage = () => {
   return (
-    <div className="signin__form">
-      <h2 className="signin__title">Sign Up</h2>
-      <p className="signin__leading">Hello new user!</p>
+    <>
+      <div className="sign__form up">
+      <GoBackButton link="/signin" text="go to sign in" />
 
-      <SignUpForm />
-    </div>
+        <h2 className="sign__title">Sign Up</h2>
+        <p className="sign__leading">Hello new user.</p>
+
+        <SignUpForm />
+      </div>
+    </>
   );
 };
 export { SignUpPage };

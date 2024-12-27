@@ -12,7 +12,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
   
       const existingUser = await prisma.user.findUnique({
         where: {
-          email: email,
+          email: email.toLowerCase().trim(),
         },
       });
   
@@ -29,7 +29,6 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
       return res.status(200).json({ status: 200, data: existingUser });
   
     } catch (error) {
-      console.error(error);
       return res.status(500).json({ error: { status: 500, message: 'Internal Server Error' } });
     }
   };

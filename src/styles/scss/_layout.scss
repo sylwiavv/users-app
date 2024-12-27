@@ -24,15 +24,12 @@ body {
 
 // Layout for not-authorized
 .is-not-authorized {
-  background: rgb(245, 245, 250);
-  background: rgb(245, 245, 250);
+  // @include flexbox(center, center);
   background: radial-gradient(
     circle,
     rgba(245, 245, 250, 1) 23%,
     rgba(227, 227, 241, 1) 95%
   );
-
-  // @include flexbox(center, center);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,6 +143,12 @@ body {
   }
 }
 
+.link-wrapper {
+  display: flex;
+  justify-content: end;
+  padding: vars.$space-xl 0;
+}
+
 /* Mobile ------------------ */
 @media only screen and (max-width: 1300px) {
   .grid-layout {
@@ -183,7 +186,7 @@ body {
     padding: vars.$space-m;
   }
 
-  .is-not-authorized .signin__form {
+  .is-not-authorized .sign__form {
     padding: vars.$space-m;
     margin: vars.$space-m;
   }

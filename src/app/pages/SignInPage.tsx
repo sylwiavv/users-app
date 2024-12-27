@@ -10,8 +10,8 @@ interface IValidateProps {
 
 const SignInPage = () => {
   return (
-    <div className="signin__form">
-      <h2 className="signin__title">Sign In</h2>
+    <div className="sign__form in">
+      <h2 className="sign__title">Sign In</h2>
 
       <SignInForm />
 

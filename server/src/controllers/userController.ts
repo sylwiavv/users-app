@@ -32,7 +32,7 @@ export const createUser = async (req: Request, res: Response) => {
     const userData = req.body;
 
     const existingUser = await prisma.user.findUnique({
-      where: { email: userData.email },
+      where: { email: userData.email.toLowerCase().trim() },
     });
 
     if (existingUser) {
@@ -44,6 +44,7 @@ export const createUser = async (req: Request, res: Response) => {
     const user = await prisma.user.create({
       data: {
         ...userData,
+        email: userData.email.toLowerCase().trim(),
         password: hashedPassword,
         visa: [
          userData.visa,

@@ -160,7 +160,12 @@ select {
 }
 
 .form-section {
-  margin-bottom: vars.$space-m;
+  margin-bottom: vars.$space-l;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  background-color: #fff;
+  padding: vars.$space-m;
+  border-radius: 8px;
+
   &__title {
     color: vars.$dark-gray;
     letter-spacing: 0.05rem;

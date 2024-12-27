@@ -24,7 +24,7 @@ import {
 } from "./SignUpFormSections";
 import { useNavigate } from "react-router-dom";
 import DatePickerComponent from "../../../atoms/DatePickerComponent";
-
+import { ButtonWithSpinner } from "../../../atoms/ButtonWithSpinner/ButtonWithSpinner";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -198,7 +198,13 @@ const SignUpForm = () => {
             />
 
             <div className="form-section">
+              <div className="row">
               <h3 className="form-section__title">Visa Information</h3>
+              <button type="button" onClick={addVisa}>
+                  Add Visa
+                </button>
+              </div>
+      
               <div className="form">
                 {visaList.map((visa, index) => (
                   <div key={index} className="visa-entry">
@@ -257,9 +263,7 @@ const SignUpForm = () => {
                     </button>
                   </div>
                 ))}
-                <button type="button" onClick={addVisa}>
-                  Add Visa
-                </button>
+         
               </div>
             </div>
           </div>
@@ -330,14 +334,21 @@ const SignUpForm = () => {
           </div>
         </div>
 
-        <FormButtons
-          isLoading={isLoading}
+        <ButtonWithSpinner
           type="submit"
-          onClose={() => console.log("Cancel registration")}
-          onSend={handleOnSubmit}
-        />
+          isLoading={isLoading}
+          onClick={handleOnSubmit}
+          className="blue-button"
+        >
+          Send
+        </ButtonWithSpinner>
       </form>
-      <NavLink to="/signin">Return to the Sign In</NavLink>
+
+      <div className="link-wrapper">
+        <p>
+          Return to the <NavLink to="/signin">Sign In</NavLink>
+        </p>
+      </div>
     </>
   );
 };

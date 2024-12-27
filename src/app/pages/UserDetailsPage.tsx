@@ -43,7 +43,7 @@ const UserDetailsPage = () => {
   return (
     <GridLayout>
       <section className="user-details__actions">
-        <GoBackButton />
+        <GoBackButton link="/address-book" />
         <UsersDetailsPersonal user={userDetails} />
         {userDetails && (
           <UserDetailsButtonActions

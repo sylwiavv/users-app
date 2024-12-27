@@ -1,7 +1,7 @@
 import { ButtonWithSpinner } from "./ButtonWithSpinner/ButtonWithSpinner"
 
 interface IFormButtonsProps {
-    onClose: () => void, 
+    onClose?: () => void, 
     onSend: () => void
     isLoading: boolean
     type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];

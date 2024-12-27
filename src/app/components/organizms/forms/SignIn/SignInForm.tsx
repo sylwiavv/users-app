@@ -2,7 +2,6 @@ import FormField from "../../../atoms/FormField/FormField";
 import { useForm } from "../../../../hooks/useForm";
 import { signInValidate } from "../../forms/SignIn/SignInValidate";
 import { useSignInUser } from "../../../../../server-actions/hooks/useSignInUser";
-import { ISigInUser } from "../../../../types/users";
 import { NavLink, useNavigate } from "react-router-dom";
 import { generateToken } from "../../../../../server-actions/hooks/useGenerateToken";
 import { useAuth } from "../../../../context/AuthContext";
@@ -29,13 +28,6 @@ export const SignInForm = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [isLoading, setIsLoading] = useState(false);
-
-  const findPassingUser = (email: string, users: ISigInUser[]) => {
-    const emailFormatted = email.toLowerCase().trim();
-    return users.find(
-      (user) => user.email.toLowerCase().trim() === emailFormatted
-    );
-  };
 
   const { login } = useAuth();
 
@@ -93,7 +85,7 @@ export const SignInForm = () => {
   } = useForm(defaultValues, handleOnSubmit, signInValidate);
 
   return (
-    <form className="signin__form-content" onSubmit={handleSubmit}>
+    <form className="sign__form-content" onSubmit={handleSubmit}>
       <FormField
         id="email"
         label="email"
@@ -115,7 +107,7 @@ export const SignInForm = () => {
         error={errors.password}
       />
 
-      <div className="signin__form-group">
+      <div className="sign__form-group">
         <ButtonWithSpinner
           type={"submit"}
           className="signin__button blue-button"
@@ -125,8 +117,8 @@ export const SignInForm = () => {
           Send
         </ButtonWithSpinner>
       </div>
-      <div className="signin__form-group">
-        <p className="signin__signup-link">
+      <div className="sign__form-group">
+        <p className="sign__signup-link">
         Don't have an account?
           <NavLink to={"/signup"}>{" "}Sign Up here</NavLink>
         </p>
