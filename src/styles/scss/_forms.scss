@@ -100,6 +100,10 @@ select {
 }
 
 .input-label__wrapper {
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+
   &__label {
     opacity: 0.7;
     display: flex;
@@ -191,6 +195,33 @@ select {
 }
 
 .additional-info {
+  display: flex;
+  align-items: center;
   font-size: .8rem;
   padding: vars.$space-s 0;
+
+  .link {
+    opacity: .8;
+    transition: opacity, .2s ease-in-out;
+
+    .custom-svg-icon {
+      margin-left: vars.$space-s;
+      margin-right: vars.$space-xs;
+    }
+
+    &:hover {
+      color: vars.$dark-blue;
+
+      cursor: pointer;
+      opacity: 1;
+
+      .custom-svg-icon {
+        fill: vars.$dark-blue;
+      }
+    }
+  }
+}
+
+.link-wrapper {
+  padding: vars.$space-xl 0;
 }

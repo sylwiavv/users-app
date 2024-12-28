@@ -5,7 +5,7 @@ const SignUpPage = () => {
   return (
     <>
       <div className="sign__form up">
-      <GoBackButton link="/signin" text="go to sign in" />
+      <GoBackButton link="/signin" />
 
         <h2 className="sign__title">Sign Up</h2>
         <p className="sign__leading">Hello new user.</p>

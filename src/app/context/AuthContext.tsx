@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [currentUser?.id]);
 
   const login = (user: Partial<ICurrentUser>) => {
     setCurrentUser(user);

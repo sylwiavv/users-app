@@ -14,7 +14,7 @@ export const Header = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("../signin", { replace: true });
+    navigate("/signin", { replace: true });
   };
 
   const getCurrentUserInfo = () => {

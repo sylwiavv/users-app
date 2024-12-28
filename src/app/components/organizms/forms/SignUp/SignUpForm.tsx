@@ -23,8 +23,8 @@ import {
   GeneralInfoSection,
 } from "./SignUpFormSections";
 import { useNavigate } from "react-router-dom";
-import DatePickerComponent from "../../../atoms/DatePickerComponent";
 import { ButtonWithSpinner } from "../../../atoms/ButtonWithSpinner/ButtonWithSpinner";
+import { VisaSection } from "./SignUpFormSections/VisaSection";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -34,7 +34,9 @@ const SignUpForm = () => {
 
   const [managers, setManagers] = useState<IManager[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [visaList, setVisaList] = useState<IVisa[]>([]);
+  const [visaList, setVisaList] = useState<IVisa[]>([
+    { issuing_country: "", type: "", start_date: "", end_date: "" },
+  ]);
 
   const [birthtDate, setBirthtDate] = useState(new Date());
 
@@ -63,7 +65,7 @@ const SignUpForm = () => {
     cnumber: "",
     citizenship: "",
     manager_id: "",
-    isRemoteWork: "false",
+    isRemoteWork: false,
     email: "",
     password: "",
     user_avatar: "",
@@ -71,10 +73,18 @@ const SignUpForm = () => {
     last_native_name: "",
     middle_native_name: "",
     date_birth: "",
-    visa: visaList,
+    visa: [
+      {
+        issuing_country: "",
+        type: "",
+        start_date: "",
+        end_date: "",
+      },
+    ],
   };
 
   const handleOnSubmit = async () => {
+    console.log(errors, "errors")
     setIsLoading(true);
     if (Object.keys(errors).length > 0) {
       return;
@@ -110,6 +120,7 @@ const SignUpForm = () => {
     handleSubmit,
     handleInputBlur,
     handleSelectInputBlur,
+    setFormValues,
   } = useForm(defaultValues, handleOnSubmit, SignUpValidate);
 
   const [isChecked, setIsChecked] = useState(false);
@@ -119,36 +130,9 @@ const SignUpForm = () => {
     handleInputChange(event);
   };
 
-  const handleVisaChange = (
-    index: number,
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = event.target;
-    const updatedVisaList = [...visaList];
-    updatedVisaList[index] = { ...updatedVisaList[index], [name]: value };
-    setVisaList(updatedVisaList);
-  };
-
-  const addVisa = () => {
-    setVisaList([
-      ...visaList,
-      {
-        issuing_country: "",
-        type: "",
-        start_date: new Date(),
-        end_date: new Date(),
-      },
-    ]);
-  };
-
-  const removeVisa = (index: number) => {
-    const updatedVisaList = visaList.filter((_, i) => i !== index);
-    setVisaList(updatedVisaList);
-  };
-
   return (
     <>
-      <form onSubmit={handleSubmit} className="register-form">
+      <form onSubmit={handleOnSubmit} className="register-form">
         <PersonalInfoSection
           errors={errors}
           formValues={formValues}
@@ -196,78 +180,16 @@ const SignUpForm = () => {
               error=""
               onChange={handleCheckboxChange}
             />
-
-            <div className="form-section">
-              <div className="row">
-              <h3 className="form-section__title">Visa Information</h3>
-              <button type="button" onClick={addVisa}>
-                  Add Visa
-                </button>
-              </div>
-      
-              <div className="form">
-                {visaList.map((visa, index) => (
-                  <div key={index} className="visa-entry">
-                    <div className="row">
-                      <FormField
-                        error={""}
-                        label="Issuing Country"
-                        name="issuing_country"
-                        value={visa.issuing_country}
-                        onChange={(e) => handleVisaChange(index, e)}
-                      />
-                      <FormField
-                        error={""}
-                        label="Visa Type"
-                        name="type"
-                        value={visa.type}
-                        onChange={(e) => handleVisaChange(index, e)}
-                      />
-                    </div>
-                    <div className="row">
-                      <div>
-                        <label>Start Date</label>
-                        <DatePickerComponent
-                          startDate={visa.start_date as Date}
-                          setStartDate={(date) => {
-                            const updatedVisaList = [...visaList];
-                            updatedVisaList[index] = {
-                              ...updatedVisaList[index],
-                              start_date: date as Date,
-                            };
-                            setVisaList(updatedVisaList);
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <label>End Date</label>
-                        <DatePickerComponent
-                          startDate={visa.end_date as Date}
-                          setStartDate={(date) => {
-                            const updatedVisaList = [...visaList];
-                            updatedVisaList[index] = {
-                              ...updatedVisaList[index],
-                              end_date: date as Date,
-                            };
-                            setVisaList(updatedVisaList);
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      className="remove-visa-button"
-                      onClick={() => removeVisa(index)}
-                    >
-                      Remove Visa
-                    </button>
-                  </div>
-                ))}
-         
-              </div>
-            </div>
           </div>
         </div>
+
+        <VisaSection
+          formValues={formValues}
+          setVisaList={setVisaList}
+          visaList={visaList}
+          handleInputChange={handleInputChange}
+          setFormValues={setFormValues}
+        />
 
         <div className="form-section">
           <h3 className="form-section__title">Sign in info</h3>
@@ -337,7 +259,7 @@ const SignUpForm = () => {
         <ButtonWithSpinner
           type="submit"
           isLoading={isLoading}
-          onClick={handleOnSubmit}
+          onClick={(e) => handleSubmit(e)}
           className="blue-button"
         >
           Send

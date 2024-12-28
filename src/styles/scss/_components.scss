@@ -36,7 +36,7 @@
   background-color: vars.$light-blue;
   color: white;
   margin-top: vars.$space-m;
-  padding: vars.$space-m  vars.$space-s;
+  padding: vars.$space-m vars.$space-s;
   border: none;
   border-radius: 4px;
 
@@ -114,7 +114,7 @@
 
 button {
   border-radius: 4px;
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 }
 
 @media only screen and (max-width: 580px) {
@@ -141,7 +141,6 @@ button {
   margin-bottom: vars.$space-m;
   color: vars.$light-gray-secondary;
 
-
   &__icon-wrapper {
     display: flex;
     background-color: vars.$border-color-primary;
@@ -153,13 +152,7 @@ button {
     &:hover {
       background-color: vars.$border-color-primary-hover;
     }
-
-    .custom-svg-icon {
- 
-  
-    }
   }
-
 }
 
 .custom-svg-icon {
@@ -167,7 +160,6 @@ button {
   height: 14px;
 
   fill: vars.$dark-gray;
-
 }
 
 .loader-wrapper {
@@ -180,11 +172,15 @@ button {
   z-index: 10;
 }
 .custom-loader {
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  border:8px solid;
-  border-color:vars.$light-blue #0000;
-  animation:s1 1s infinite;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 8px solid;
+  border-color: vars.$light-blue #0000;
+  animation: s1 1s infinite;
 }
-@keyframes s1 {to{transform: rotate(.5turn)}}
+@keyframes s1 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}

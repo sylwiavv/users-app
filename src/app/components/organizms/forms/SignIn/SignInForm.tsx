@@ -13,8 +13,8 @@ import { ButtonWithSpinner } from "../../../atoms/ButtonWithSpinner/ButtonWithSp
 import { useState } from "react";
 
 interface IFormData {
-  email: string;
   password: string;
+  email: string;
 }
 
 export const SignInForm = () => {
@@ -118,10 +118,12 @@ export const SignInForm = () => {
         </ButtonWithSpinner>
       </div>
       <div className="sign__form-group">
-        <p className="sign__signup-link">
-        Don't have an account?
-          <NavLink to={"/signup"}>{" "}Sign Up here</NavLink>
-        </p>
+        <div className="link-wrapper">
+          <p className="sign__signup-link">
+            Don't have an account?
+            <NavLink to={"/signup"}> Sign Up here</NavLink>
+          </p>
+        </div>
       </div>
     </form>
   );

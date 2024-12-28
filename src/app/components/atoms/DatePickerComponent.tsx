@@ -5,12 +5,13 @@ import "react-datepicker/dist/react-datepicker.css";
 
 interface IDatePickerComponentProps {
   startDate: Date;
-  setStartDate: Dispatch<SetStateAction<Date>>
+  // setStartDate: Dispatch<SetStateAction<Date>>
+  setStartDate: (date: Date) => void
 }
 
 const DatePickerComponent = ({
   startDate,
-  setStartDate,
+  setStartDate
 }: IDatePickerComponentProps) => {
   
   return (

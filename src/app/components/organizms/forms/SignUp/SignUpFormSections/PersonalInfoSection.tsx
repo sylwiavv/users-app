@@ -1,5 +1,13 @@
+import { CopyIcon } from "../../../../../../assets/icons/icons";
 import { TFormValues } from "../../../../../hooks/useForm";
 import FormField from "../../../../atoms/FormField/FormField";
+import {
+  ESnackbarTypes,
+  useSnackbar,
+} from "../../../../../context/SnackbarContex";
+enum AVATARS {
+  LINK = "https://avatar.iran.liara.run/public",
+}
 
 export interface ISignUpSectionProps {
   errors: Record<string, string>;
@@ -16,6 +24,15 @@ export const PersonalInfoSection = ({
   handleInputBlur,
   handleInputChange,
 }: ISignUpSectionProps) => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(AVATARS.LINK);
+    enqueueSnackbar("Link copied", {
+      variant: ESnackbarTypes.SUCCESS,
+    });
+  };
+
   return (
     <div className="form-section">
       <h3 className="form-section__title">Personal info</h3>
@@ -41,8 +58,8 @@ export const PersonalInfoSection = ({
             onBlur={handleInputBlur}
           />
         </div>
-        
-        <div className="row">
+
+        <div className="">
           <FormField
             error={errors.user_avatar}
             label="User avatar"
@@ -51,8 +68,14 @@ export const PersonalInfoSection = ({
             value={formValues.user_avatar}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
-            additionalInfo={"You cane use this link https://avatar.iran.liara.run/public"}
           />
+          <div className="additional-info">
+            You can use this link 
+            <span onClick={copyLink} className="link">
+            <CopyIcon />
+              {AVATARS.LINK}
+            </span>
+          </div>
         </div>
       </div>
     </div>

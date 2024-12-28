@@ -1,0 +1,90 @@
+@use "../../variables" as vars;
+@use "sass:color";
+
+.visa-remove {
+  position: relative;
+
+  .icon-button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+    height: 28px;
+    width: 28px;
+
+    &:hover {
+      background-color: color.adjust(vars.$error-primary-dark, $lightness: 49%);
+    }
+  }
+
+  .custom-svg-icon {
+    position: relative;
+    width: 17px;
+    height: 17px;
+
+    fill: vars.$error-primary;
+
+    &:hover {
+      fill: vars.$error-primary-dark;
+    }
+  }
+}
+
+.visa-add {
+  font-size: vars.$font-size-md;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  gap: vars.$space-s;
+
+  &:hover {
+    .custom-svg-icon {
+      opacity: 1;
+    }
+  }
+
+  .custom-svg-icon {
+    width: 20px;
+    height: 20px;
+
+    fill: vars.$success-primary;
+    opacity: .8;
+  }
+
+  &__label {
+    display: block;
+  }
+}
+
+.visa-add,
+.visa-remove {
+  background-color: transparent;
+  .icon-button__icon {
+    transition: background-color, 0.4s ease-in-out;
+  }
+
+  .custom-svg-icon {
+    transition: fill, 0.4s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.visa__section {
+  display: flex;
+  align-items: flex-start;
+  gap: vars.$space-m;
+
+  margin-bottom: vars.$space-xxl;
+
+  &-wrapper {
+    box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;    padding: vars.$space-m;
+    border-radius: 4px;
+    background-color: vars.$light-gray-fourth;
+    width: 100%;
+  }
+}

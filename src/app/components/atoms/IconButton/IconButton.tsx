@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { ReactNode } from "react";
 
 interface IconButtonProps {
   onClick: () => void;
-  icon: React.ReactNode;
-  label: string;
-  className?: string; 
+  icon: ReactNode;
+  label?: string;
+  className?: string;
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
 }
 
-const IconButton: React.FC<IconButtonProps> = ({ onClick, icon, label, className }) => {
+const IconButton = ({ onClick, icon, label, className, type ="button" }: IconButtonProps) => {
   return (
-    <button className={`icon-button ${className}`} onClick={onClick}>
+    <button type={type} className={`icon-button ${className || ""}`} onClick={onClick}>
       <span className="icon-button__icon">{icon}</span>
       {label === "" ? "" : <span className="icon-button__label">{label}</span>}
     </button>

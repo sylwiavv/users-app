@@ -29,7 +29,7 @@ export const useForm = (
     for (const fieldName in formValues) {
       const value = formValues[fieldName];
 
-      console.log(value)
+      console.log("handleSubmit")
   
       const valueAsStringOrNumberOrBoolean =
         typeof value === "boolean"
@@ -100,5 +100,6 @@ export const useForm = (
     handleInputChange,
     handleSelectInputBlur,
     handleSubmit,
+    setFormValues
   };
 };
