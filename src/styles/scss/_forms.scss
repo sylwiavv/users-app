@@ -37,6 +37,11 @@ input {
   }
 }
 
+.placeholder {
+  font-size: calc(vars.$font-size-md);
+  color: vars.$light-gray-secondary;
+}
+
 input,
 select {
   width: 100%;
@@ -44,6 +49,7 @@ select {
   border: 1px solid vars.$light-gray;
   border-radius: 4px;
   transition: border-color 0.2s ease-in-out;
+  height: 40px;
 
   &:hover {
     border: 1px solid vars.$light-gray-third;
@@ -52,10 +58,12 @@ select {
 
 select {
   appearance: none;
-  background: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%234a5568" d="M2 0L0 2h4zM2 5L0 3h4z"/></svg>')
-    no-repeat right 0.75rem center;
   background-size: 0.65rem;
   width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .row {
@@ -100,6 +108,7 @@ select {
 }
 
 .input-label__wrapper {
+  margin-bottom: vars.$space-xs;
   .react-datepicker-wrapper {
     width: 100%;
   }
@@ -111,7 +120,7 @@ select {
     font-size: 0.8rem;
     font-weight: 600;
     text-transform: capitalize;
-    margin-bottom: vars.$space-xs;
+    margin-bottom: calc(vars.$space-xs + .2rem);
   }
 
   .input-with-icon__input {

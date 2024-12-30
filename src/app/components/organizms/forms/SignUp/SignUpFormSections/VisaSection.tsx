@@ -122,6 +122,7 @@ export const VisaSection = ({
                     setStartDate={(date) =>
                       handleSetDate({ e: date, index, field: "start_date" })
                     }
+                    placeholderText="Select start date"
                   />
                 )}
               </div>
@@ -133,6 +134,7 @@ export const VisaSection = ({
                     setStartDate={(date) =>
                       handleSetDate({ e: date, index, field: "end_date" })
                     }
+                    placeholderText="Select end date"
                   />
                 )}
               </div>
@@ -149,6 +151,7 @@ export const VisaSection = ({
       </div>
 
       <IconButton
+      type="button"
         className="visa-add"
         icon={<PlusIcon />}
         onClick={addVisa}

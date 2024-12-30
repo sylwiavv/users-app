@@ -36,7 +36,7 @@ const SelectField = React.forwardRef<HTMLSelectElement, IFormFieldProps<any>>(
           {label}
         </label>
         <select
-          className={className}
+          className={value === "" ? "placeholder" : className}
           name={name}
           id={id}
           value={value as string}

@@ -1,8 +1,7 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useManager } from "../../../../../server-actions/hooks/useManager";
 import { IManager, IVisa } from "../../../../types/users";
 import { useForm } from "../../../../hooks/useForm";
-import { FormButtons } from "../../../atoms/FormButtons";
 import FormField from "../../../atoms/FormField/FormField";
 import {
   INewCreatedUser,
@@ -10,7 +9,6 @@ import {
 } from "../../../../../server-actions/hooks/useUser";
 import { NavLink } from "react-router-dom";
 import CheckboxField from "../../../atoms/CheckboxField/CheckboxField";
-import { SignUpValidate } from "./SignUpValidate";
 import {
   useSnackbar,
   ESnackbarTypes,
@@ -25,6 +23,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { ButtonWithSpinner } from "../../../atoms/ButtonWithSpinner/ButtonWithSpinner";
 import { VisaSection } from "./SignUpFormSections/VisaSection";
+import { signUpValidate } from "./signUpValidate";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ const SignUpForm = () => {
     { issuing_country: "", type: "", start_date: "", end_date: "" },
   ]);
 
-  const [birthtDate, setBirthtDate] = useState(new Date());
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -84,13 +83,12 @@ const SignUpForm = () => {
   };
 
   const handleOnSubmit = async () => {
-    console.log(errors, "errors")
     setIsLoading(true);
     if (Object.keys(errors).length > 0) {
       return;
     }
 
-    const formattedDate = formatDate(birthtDate);
+    const formattedDate = formatDate(formValues.date_birth as Date);
 
     const newUser = {
       ...formValues,
@@ -117,13 +115,12 @@ const SignUpForm = () => {
     handleInputChange,
     formValues,
     errors,
+    setError,
     handleSubmit,
     handleInputBlur,
     handleSelectInputBlur,
     setFormValues,
-  } = useForm(defaultValues, handleOnSubmit, SignUpValidate);
-
-  const [isChecked, setIsChecked] = useState(false);
+  } = useForm(defaultValues, handleOnSubmit, signUpValidate);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
@@ -142,13 +139,13 @@ const SignUpForm = () => {
 
         <GeneralInfoSection
           errors={errors}
+          setError={setError}
           formValues={formValues}
           handleInputBlur={handleInputBlur}
           handleInputChange={handleInputChange}
-          birthtDate={birthtDate}
-          setBirthDay={setBirthtDate}
           handleSelectInputBlur={handleSelectInputBlur}
           managers={managers}
+          setFormValues={setFormValues}
         />
 
         <ContactInfoSection

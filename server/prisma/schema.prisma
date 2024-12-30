@@ -51,7 +51,7 @@ model User {
   date_birth         Json     @map("date_birth")
   visa               Json?    @map("visa")
   password           String
-  manager_id          String
+  manager_id         String
 }
 
 enum UserRole {

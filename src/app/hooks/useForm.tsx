@@ -3,7 +3,7 @@ import { EUserRole, IVisa } from "../types/users";
 
 export type TFormValues = Record<string, TFormInputValue>;
 
-export type TFormInputValue = string | IVisa[] | EUserRole | number | boolean;
+export type TFormInputValue = string | IVisa[] | EUserRole | number | boolean | Date;
 
 export type TValidateFn = (
   value: string,
@@ -28,8 +28,6 @@ export const useForm = (
   
     for (const fieldName in formValues) {
       const value = formValues[fieldName];
-
-      console.log("handleSubmit")
   
       const valueAsStringOrNumberOrBoolean =
         typeof value === "boolean"
@@ -96,6 +94,7 @@ export const useForm = (
   return {
     formValues,
     errors,
+    setError,
     handleInputBlur,
     handleInputChange,
     handleSelectInputBlur,

@@ -1,6 +1,6 @@
 import { IVisa } from "../../../../types/users";
 
-export const SignUpValidate = (
+export const signUpValidate = (
   value: string | number | boolean | IVisa[],
   name: string,
   errors: Record<string, string>
@@ -16,9 +16,18 @@ export const SignUpValidate = (
     first_native_name: "First native name",
     last_native_name: "Last native name",
     middle_native_name: "Middle native name",
-    manager_id: "Manger",
-    user_avatar: "User avatar"
+    manager_id: "Manager",
+    user_avatar: "User avatar",
+    date_birth: "Date birth"
   };
+
+  const fieldsToIgnore = [
+    "visa", "first_native_name", "last_native_name", "middle_native_name"
+  ];
+
+  if (fieldsToIgnore.includes(name)) {
+    return errors;
+  }
 
   const readableName = names[name] || name; 
   const newErrors = { ...errors };

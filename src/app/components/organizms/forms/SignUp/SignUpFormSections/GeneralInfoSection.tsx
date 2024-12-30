@@ -5,24 +5,52 @@ import NumberField from "../../../../atoms/NumberField/NumberField";
 import SelectField from "../../../../atoms/SelectField/SelectField";
 import { ISignUpSectionProps } from "./PersonalInfoSection";
 import DatePickerComponent from "../../../../atoms/DatePickerComponent";
+import { TFormValues } from "../../../../../hooks/useForm";
 
 interface IGeneralInfoSection extends ISignUpSectionProps {
-  birthtDate: Date;
-  setBirthDay: Dispatch<SetStateAction<Date>>;
   handleSelectInputBlur: FocusEventHandler<HTMLSelectElement>;
   managers: IManager[];
+  setFormValues: Dispatch<SetStateAction<TFormValues>>;
+  setError: Dispatch<SetStateAction<Record<string, string>>>
 }
 
 export const GeneralInfoSection = ({
   errors,
+  setError,
   formValues,
   handleInputBlur,
   handleInputChange,
-  birthtDate,
-  setBirthDay,
   handleSelectInputBlur,
   managers,
+  setFormValues,
 }: IGeneralInfoSection) => {
+
+  const today = new Date();
+  const minEighteen = new Date(today);
+  minEighteen.setFullYear(today.getFullYear() - 18);
+
+  const handleSetDate = ({ dateOfBirth }: { dateOfBirth: Date }) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      date_birth: dateOfBirth,
+    }));
+
+    setError((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      delete newErrors.date_birth;
+      return newErrors;
+    });
+  };
+
+  const handleDateOnBlur = () => {
+    if (!formValues.date_birth) {
+      setError((prevErrors) => {
+        const newErrors = { ...prevErrors, date_birth: "Date birth is required" };
+        return newErrors;
+      });
+    }
+  }
+
   return (
     <div className="form-section">
       <h3 className="form-section__title">General info</h3>
@@ -66,23 +94,38 @@ export const GeneralInfoSection = ({
             onBlur={handleInputBlur}
           />
         </div>
+
         <div className="row">
-          <DatePickerComponent
-            startDate={birthtDate}
-            setStartDate={setBirthDay}
+          <div className="input-label__wrapper">
+            <label className="input-label__wrapper__label">Date of birth</label>
+            <DatePickerComponent
+              startDate={formValues.date_birth as Date}
+              setStartDate={(dateOfBirth) =>
+                handleSetDate({
+                  dateOfBirth,
+                })
+              }
+              handleOnBlur={handleDateOnBlur}
+              maxDate={minEighteen}
+              placeholderText="Select your date of birth"
+              />
+            {errors.date_birth && (
+              <p className="input-label__wrapper__error">{errors.date_birth}</p>
+            )}
+          </div>
+
+          <SelectField
+            id="manager_id"
+            name="manager_id"
+            value={formValues.manager_id as string}
+            error={errors.manager_id}
+            onChange={handleInputChange}
+            onBlur={handleSelectInputBlur}
+            label="Manager"
+            placeholder="Select a manager"
+            children={managers}
           />
         </div>
-        <SelectField
-          id="manager_id"
-          name="manager_id"
-          value={formValues.manager_id as string}
-          error={errors.manager_id}
-          onChange={handleInputChange}
-          onBlur={handleSelectInputBlur}
-          label="Manager"
-          placeholder="Select a Manager"
-          children={managers}
-        />
       </div>
     </div>
   );

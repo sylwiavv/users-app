@@ -1,26 +1,32 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 interface IDatePickerComponentProps {
   startDate: Date;
-  // setStartDate: Dispatch<SetStateAction<Date>>
-  setStartDate: (date: Date) => void
+  placeholderText?: string;
+  maxDate?: Date;
+  setStartDate: (date: Date) => void;
+  handleOnBlur?: () => void;
 }
 
 const DatePickerComponent = ({
   startDate,
-  setStartDate
+  setStartDate,
+  handleOnBlur,
+  maxDate,
+  placeholderText,
 }: IDatePickerComponentProps) => {
-  
   return (
     <DatePicker
+      placeholderText={placeholderText}
       selected={startDate}
       onChange={(date) => setStartDate(date as Date)}
       scrollableYearDropdown
       showYearDropdown
       dateFormat="yyyy/MM/dd"
+      onBlur={handleOnBlur}
+      maxDate={maxDate}
     />
   );
 };
