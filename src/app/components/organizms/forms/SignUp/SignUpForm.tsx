@@ -23,7 +23,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { ButtonWithSpinner } from "../../../atoms/ButtonWithSpinner/ButtonWithSpinner";
 import { VisaSection } from "./SignUpFormSections/VisaSection";
-import { signUpValidate } from "./signUpValidate";
+import { SignUpValidate } from "./SignUpValidate";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -120,7 +120,7 @@ const SignUpForm = () => {
     handleInputBlur,
     handleSelectInputBlur,
     setFormValues,
-  } = useForm(defaultValues, handleOnSubmit, signUpValidate);
+  } = useForm(defaultValues, handleOnSubmit, SignUpValidate);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
