@@ -15,22 +15,32 @@ export const useManager = () => {
       const responseData = (await response).json();
       return responseData;
     } catch (error) {
-      return []
+      return [];
     }
   }, []);
 
   const getManagerInfo = useCallback(async (id: Pick<IManager, "id">) => {
     try {
-      return fetch(`${API_URL.MANAGER}/${id}}`, {
+      const response = await fetch(`${API_URL.MANAGER}/${id}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
-      }).then((response) => response.json());
+      });
+  
+      if (!response.ok) {
+        console.error(`HTTP error! status: ${response.status}`);
+        return null;
+      }
+  
+      const responseData = await response.json();
+  
+      return responseData.data;
     } catch (e) {
-      console.log(e);
+      return null;
     }
   }, []);
+  
 
   return { getManagers, getManagerInfo };
 };

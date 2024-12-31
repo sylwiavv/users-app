@@ -34,6 +34,7 @@ export interface IUser {
     date_birth: IDateOfBirth;
     desk_number: number | "";
     manager: IManager;
+    manager_id: Pick<IManager, "id">
     phone: string;
     email: string;
     skype: string;

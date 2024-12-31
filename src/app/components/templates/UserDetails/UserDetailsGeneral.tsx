@@ -1,8 +1,13 @@
 import { SuitcaseIcon, BuildingIcon, DoorIcon, HashIcon, PersonIcon, CalendarIcon } from "../../../../assets/icons/icons";
-import { IUser } from "../../../types/users";
+import { IManager, IUser } from "../../../types/users";
+import { Loader } from "../../atoms/Loader/Loader";
 
-const UserDetailsGeneral = ({ user }: { user: IUser }) => {
-  const { department, building, room, desk_number, date_birth, manager } = user;
+const UserDetailsGeneral = ({ user, manager }: { user: IUser, manager: IManager }) => {
+  const { department, building, room, desk_number, date_birth } = user;
+
+  if (!manager) {
+    return <Loader />
+  }
 
   return (
     <div className="user-details__general">

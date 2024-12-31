@@ -43,6 +43,7 @@ export const useUser = () => {
     }
   }, []);
 
+  //---------------------
   const createUser = useCallback(async (data: INewCreatedUser) => {
     try {
       const response = await fetch(`${API_URL.USER}`, {
@@ -60,6 +61,7 @@ export const useUser = () => {
     }
   }, []);
 
+  //---------------------
   const getUserInfo = useCallback(async (id: string): Promise<IUser | null> => {
     try {
       const response = await fetch(`${API_URL.USER}/${id}`, {
@@ -67,7 +69,7 @@ export const useUser = () => {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
-      })
+      });
       const responseData = await response.json();
       return responseData.data;
     } catch (e) {
@@ -76,7 +78,9 @@ export const useUser = () => {
     }
   }, []);
 
-  const updateUser = useCallback(async ({ id, data }: { data: Partial<IUser>; id: string }) => {
+  //---------------------
+  const updateUser = useCallback(
+    async ({ id, data }: { data: Partial<IUser>; id: string }) => {
       try {
         const response = await fetch(`${API_URL.USER}/${id}`, {
           method: "PATCH",
@@ -84,9 +88,9 @@ export const useUser = () => {
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
-        })
+        });
         const responseData = await response.json();
-        return responseData
+        return responseData;
       } catch (e) {
         console.log(e);
         return null;

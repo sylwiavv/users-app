@@ -5,5 +5,7 @@ const routerM = require('express').Router()
 routerM.post('/', managerController.createManager);
 
 routerM.get('/', managerController.getManagers);
+routerM.get('/:id', managerController.getManagerById); 
+
 
 module.exports = routerM

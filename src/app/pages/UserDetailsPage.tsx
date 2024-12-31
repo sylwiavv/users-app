@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../server-actions/hooks/useUser";
-import { IUser } from "../types/users";
+import { IManager, IUser } from "../types/users";
 import GoBackButton from "../components/atoms/GoBackButton/GoBackButton";
 
 import { GridLayout } from "../layouts/GridLayout";
@@ -16,6 +16,7 @@ import UserDetailsContacts from "../components/templates/UserDetails/UserDetails
 import UserDetailsGeneral from "../components/templates/UserDetails/UserDetailsGeneral";
 import { UsersDetailsPersonal } from "../components/templates/UserDetails/UserDetailsPersonal";
 import UserDetailsTravel from "../components/templates/UserDetails/UserDetailsTravel";
+import { useManager } from "../../server-actions/hooks/useManager";
 
 const UserDetailsPage = () => {
   const { id } = useParams<Pick<IUser, "id">>();
@@ -23,6 +24,9 @@ const UserDetailsPage = () => {
   const { userDetails, setUserDetails } = useUserDetails();
   const { userCanEdit } = useUserRole({ userFromPageDetails: userDetails });
   const { isLoading } = useAuth();
+  const { getManagerInfo } = useManager();
+
+  const [manager, setManager] = useState<IManager>()
 
   useEffect(() => {
     if (!id) return;
@@ -31,6 +35,8 @@ const UserDetailsPage = () => {
       try {
         const user = await getUserInfo(id);
         setUserDetails(user);
+        const manager = await getManagerInfo(user?.manager_id as Pick<IManager, "id">);
+        setManager(manager)
       } catch (err) {
         // TODO: snackbar
       }
@@ -53,7 +59,7 @@ const UserDetailsPage = () => {
       </section>
 
       <section id="user-details-container" className="user-details__data">
-        <UserDetailsGeneral user={userDetails} />
+        <UserDetailsGeneral user={userDetails} manager={manager as IManager} />
         <UserDetailsContacts user={userDetails} />
         <UserDetailsTravel user={userDetails} />
       </section>
