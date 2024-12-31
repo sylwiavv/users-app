@@ -35,6 +35,7 @@ const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [visaList, setVisaList] = useState<IVisa[]>([
     { issuing_country: "", type: "", start_date: "", end_date: "" },
+    
   ]);
 
   const [isChecked, setIsChecked] = useState(false);
