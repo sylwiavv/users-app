@@ -3,28 +3,22 @@ import { useForm } from "../../../../hooks/useForm";
 import { useUser } from "../../../../../server-actions/hooks/useUser";
 import { FormButtons } from "../../../atoms/FormButtons";
 import { useUserDetails } from "../../../../context/UserDetailsContext";
+import NumberField from "../../../atoms/NumberField/NumberField";
 
-export const GeneralForm =  ({closeModal}: {closeModal: () => void}) => {
+export const GeneralForm = ({ closeModal }: { closeModal: () => void }) => {
   const { userDetails, setUserDetails } = useUserDetails();
 
   const { updateUser } = useUser();
-  
 
   if (!userDetails) return <p>Something went wrong, try again.</p>;
 
-  const {
-    id,
-    department,
-    building,
-    room,
-    desk_number,
-  } = userDetails;
+  const { id, department, building, room, desk_number } = userDetails;
 
   const defaultValues = {
     department,
     building,
     room,
-    desk_number: desk_number.toString(),
+    desk_number
   };
 
   const handleOnSubmit = () => {
@@ -32,9 +26,9 @@ export const GeneralForm =  ({closeModal}: {closeModal: () => void}) => {
       try {
         const response = await updateUser({ id, data: formValues });
         if (response?.status === 200) {
-          const updatedData = await response?.json();
-          setUserDetails(updatedData);
-          closeModal()
+          const updatedData = await response
+          setUserDetails(updatedData.data);
+          closeModal();
         }
       } catch (e) {
         console.log(e);
@@ -44,7 +38,7 @@ export const GeneralForm =  ({closeModal}: {closeModal: () => void}) => {
 
   const { formValues, handleInputChange } = useForm(
     defaultValues,
-    handleOnSubmit
+    handleOnSubmit,
   );
 
   return (
@@ -85,22 +79,22 @@ export const GeneralForm =  ({closeModal}: {closeModal: () => void}) => {
           />
         </div>
         <div>
-          <FormField
+          <NumberField
             error=""
             label="Desk Number"
             name="desk_number"
             id="desk_number"
-            value={formValues.desk_number}
+            value={Number(formValues.desk_number)}
             onChange={handleInputChange}
           />
         </div>
 
-        <select name="menager">
+        {/* <select name="menager">
         <option value="">--Choose menager--</option>
         <option value="admin">Admin</option>
         <option value="employee">Employee</option>
         <option value="hr">HR</option>
-      </select>
+      </select> */}
         <FormButtons
           isLoading={false}
           onClose={closeModal}

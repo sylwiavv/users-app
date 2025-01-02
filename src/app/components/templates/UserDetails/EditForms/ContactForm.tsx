@@ -26,8 +26,8 @@ export const ContactForm = ({closeModal}: {closeModal: () => void}) => {
         const response = await updateUser({ id, data: formValues });
 
         if (response?.status === 200) {
-          const updatedData = await response?.json();
-          setUserDetails(updatedData);
+          const updatedData = await response
+          setUserDetails(updatedData.data);
           closeModal()
         }
       } catch (e) {

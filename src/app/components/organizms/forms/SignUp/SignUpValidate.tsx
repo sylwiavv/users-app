@@ -1,6 +1,6 @@
 import { IVisa } from "../../../../types/users";
 
-export const SignUpValidate = (
+export const signUpValidate = (
   value: string | number | boolean | IVisa[],
   name: string,
   errors: Record<string, string>

@@ -71,8 +71,6 @@ export const useForm = (
   ) => {
     const { name, value, type } = e.target;
 
-    console.log(name, value, type, "name, value, type")
-
     if (type === "checkbox") {
       const checked = (e.target as HTMLInputElement).checked;
       setFormValues((prevValues) => ({

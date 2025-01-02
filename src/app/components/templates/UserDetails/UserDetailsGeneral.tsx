@@ -1,21 +1,13 @@
-import {
-  SuitcaseIcon,
-  BuildingIcon,
-  DoorIcon,
-  HashIcon,
-  PersonIcon,
-  CalendarIcon,
-} from "../../../../assets/icons/icons";
+import { SuitcaseIcon, BuildingIcon, DoorIcon, HashIcon, PersonIcon, CalendarIcon } from "../../../../assets/icons/icons";
 import { IManager, IUser } from "../../../types/users";
+import { Loader } from "../../atoms/Loader/Loader";
 
-const UserDetailsGeneral = ({
-  user,
-  manager,
-}: {
-  user: IUser;
-  manager: IManager;
-}) => {
+const UserDetailsGeneral = ({ user, manager }: { user: IUser, manager: IManager }) => {
   const { department, building, room, desk_number, date_birth } = user;
+
+  if (!manager) {
+    return <Loader />
+  }
 
   return (
     <div className="user-details__general">
@@ -58,9 +50,7 @@ const UserDetailsGeneral = ({
       {/* Desk number */}
       <div className="user-details__item">
         <div className="user-details__icon-and-label">
-          <span className="user-details__icon">
-            <HashIcon />
-          </span>
+          <span className="user-details__icon"><HashIcon /></span>
           <p className="user-details__label">Desk number</p>
         </div>
         <p className="user-details__value">{desk_number}</p>
@@ -90,13 +80,9 @@ const UserDetailsGeneral = ({
           </span>
           <p className="user-details__label">Manager</p>
         </div>
-        {!manager ? (
-          ""
-        ) : (
-          <p className="user-details__value">
-            {manager ? `${manager.first_name} ${manager.last_name}` : ""}
-          </p>
-        )}
+        <p className="user-details__value">
+          {manager ? `${manager.first_name} ${manager.last_name}` : ""}
+        </p>
       </div>
     </div>
   );

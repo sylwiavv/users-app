@@ -11,9 +11,7 @@ module.exports = {
     publicPath: "/",
   },
   devServer: {
-    historyApiFallback: {
-      rewrites: [{ from: /^\/user-details/, to: "./src/public/index.html" }],
-    },
+    historyApiFallback: true,
     static: path.join(__dirname, "./src/dist"),
     port: 8080,
   },

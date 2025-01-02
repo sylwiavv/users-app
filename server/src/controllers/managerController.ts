@@ -30,7 +30,6 @@ exports.getManagers = async (req: Request, res: Response) => {
 export const getManagerById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    console.log(id, "ID MANNNN")
 
     if (!id || typeof id !== 'string') {
       return res.status(400).json({
@@ -45,7 +44,6 @@ export const getManagerById = async (req: Request, res: Response) => {
       where: { id },
     });
 
-    console.log(manager, "manager")
     if (!manager) {
       return res.status(404).json({
         error: {
